@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="holbeinmPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>formula.Cmaster</class>
+    <class>formula.Fmaster</class>
+    <class>formula.Pmaster</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:holbeinm"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="formulaPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>formula.Authorize</class>
+    <class>formula.Pcode</class>
+    <class>formula.Form1</class>
+    <class>formula.Form2</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:formula"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+    xmlns='http://java.sun.com/xml/ns/persistence/orm'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:schemaLocation='http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/orm_1_0.xsd'
+    version="1.0">
+    
+    <entity class="formula.Cmaster" access="FIELD">
+        <table name="mtbl製造備考マスタ"/>
+        <attributes>
+            <id name="pcode">
+                <column name="製造コード旧"/></id>
+            <basic name="pcodeNew">
+                <column name="製造コード"/></basic>
+            <basic name="comment">
+                <column name="備考"/></basic></attributes></entity>
+
+    <entity class="formula.Fmaster" access="FIELD">
+        <table name="mtbl製造処方マスタ"/>
+        <attributes>
+            <embedded-id name="pk"/>
+            <basic name="pcodeNew">
+                <column name="製造コード"/></basic>
+            <basic name="mcode">
+                <column name="処方コード"/></basic>
+            <basic name="percent">
+                <column name="比率"/></basic></attributes></entity>
+
+    <embeddable class="formula.FmasterPK" access="FIELD">
+        <attributes>
+            <basic name="pcode">
+                <column name="製造コード旧"/></basic>
+            <basic name="order">
+                <column name="処方順"/></basic></attributes></embeddable>
+
+    <entity class="formula.Pmaster" access="FIELD">
+        <table name="mtbl製造マスタ"/>
+        <attributes>
+            <id name="pcode">
+                <column name="製造コード旧"/></id>
+            <basic name="pcodeNew">
+                <column name="製造コード"/></basic>
+            <basic name="name">
+                <column name="製造名"/></basic>
+            <basic name="sg">
+                <column name="比重"/></basic>
+            <basic name="isMedium">
+                <column name="中間区分"/></basic>
+            <basic name="publisherID">
+                <column name="処方発行者"/></basic>
+            <basic name="registerDate">
+                <column name="登録年月日"/></basic>
+            <basic name="updateDate">
+                <column name="更新日時"/></basic>
+            <embedded name="emb"/>
+        </attributes>
+    </entity>
+    <embeddable class="formula.PmasterEmbed" access="FIELD">
+        <attributes>
+            <basic name="priceSeries">
+                <column name="SERIES"/></basic>
+            <basic name="productKindCode">
+                <column name="製品種別コード"/></basic>
+            <basic name="factoryCode">
+                <column name="製造部署コード"/></basic>
+            <basic name="sameMonth">
+                <column name="同月区分"/></basic>
+            <basic name="employeeID">
+                <column name="社員コード"/></basic>
+            <basic name="m1">
+                <column name="機械１"/></basic>
+            <basic name="m2">
+                <column name="機械２"/></basic>
+            <basic name="m3">
+                <column name="機械３"/></basic>
+            <basic name="productionAmount">
+                <column name="製造単位"/></basic>
+            <basic name="minimumAmount">
+                <column name="最低単位"/></basic>
+            <basic name="priority">
+                <column name="優先順"/></basic>
+            <basic name="spareStockAmount">
+                <column name="中間予備在庫量"/></basic>
+            <basic name="invoiceFlag">
+                <column name="伝票フラグ"/></basic>
+            <basic name="cautionFlag">
+                <column name="注意フラグ"/></basic>
+            <basic name="stdTime">
+                <column name="標準時間"/></basic>
+            <basic name="stdRoll">
+                <column name="標準ロール"/></basic>
+            <basic name="stdPathTime">
+                <column name="標準回数"/></basic>
+            <basic name="registerSpec">
+                <column name="登録区分"/></basic>
+            <basic name="alterDate">
+                <column name="変更年月日"/></basic>
+            <basic name="printDate">
+                <column name="印刷日時"/></basic>
+            <basic name="computerName">
+                <column name="コンピュータ名"/></basic>
+        </attributes>
+    </embeddable>
+        
+</entity-mappings>
