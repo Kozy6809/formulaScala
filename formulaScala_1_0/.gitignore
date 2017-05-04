@@ -1,5 +1,6 @@
 /bin/
-/target/
+target/
 /nbproject/
 /build/
-/project/target/config-classes/
+/dist/
+/lib/
