@@ -1,6 +1,14 @@
+/.settings/
+/project/
 /bin/
 target/
 /nbproject/
 /build/
 /dist/
 /lib/
+/formula.log
+/.cache-main
+/.classpath
+/.project
+/build.xml
+/formlaScala_1_0.bat

@@ -6,4 +6,9 @@ fork in run := true
 
 mainClass in (Compile, run) := Some("formula.Main")
 
-libraryDependencies += "org.scala-lang" % "scala-swing" % "2.9.1"
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.0.5" % "test",
+  "org.eclipse.persistence" % "eclipselink" % "2.6.4",
+  "org.scala-lang.modules" %% "scala-swing" % "2.0.0",
+  "com.microsoft.sqlserver" % "mssql-jdbc" % "6.4.0.jre8"
+)

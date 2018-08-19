@@ -20,7 +20,7 @@ public class Main implements IGlobalErrorHandler {
   private QueryManager qm = null;
   private MainViewC mvc = null;
   private static Vector wins = new Vector(); // ウィンドウコントローラのリスト
-  
+
   /**
    * Formula2 コンストラクター・コメント。
    */
@@ -72,19 +72,19 @@ public class Main implements IGlobalErrorHandler {
   public void globalError(Object source, Throwable t) {
     try {
       SwingUtilities.invokeAndWait(new Runnable() {
-	public void run() {
-	  JOptionPane.showMessageDialog(mvc.getMV(),
-					"データベースとの接続が失われました　\n" +
-					"プログラムを終了します　\n\n" +
-					"更新途中のデータは全て失われます　",
-					"重大なエラー",
-					JOptionPane.ERROR_MESSAGE);
-	}
+        public void run() {
+          JOptionPane.showMessageDialog(mvc.getMV(),
+                  "データベースとの接続が失われました　\n" +
+                          "プログラムを終了します　\n\n" +
+                          "更新途中のデータは全て失われます　",
+                  "重大なエラー",
+                  JOptionPane.ERROR_MESSAGE);
+        }
       });
     } catch (Exception e) {}
     System.exit(1);
   }
-	
+
   /**
    */
   private void go() {
@@ -111,8 +111,8 @@ public class Main implements IGlobalErrorHandler {
     boolean direct = false;
 
     String host = "127.0.0.1";
-    String db = "jdbc:odbc:formula";
-    //String db = "jdbc:db2:formula";
+//    String db = "jdbc:odbc:formula";
+    String db = "jdbc:sqlserver://localhost\\SQLEXPRESS;database=formula;integratedSecurity=true;";
     String user = "formula";
     String password = "formula";
     String charConversion = "";
@@ -125,41 +125,36 @@ public class Main implements IGlobalErrorHandler {
 
     // パラメータ解析
     switch (args.length) {
-    case 0:
-      direct = true;
-      break;
-    case 1:
-      direct = true;
-      if (args[0].indexOf((int)':') < 0) {
-	db = "jdbc:odbc:" + args[0];
-      } else db = args[0];
-      break;
-    case 2:
-      host = args[0];
-      if (args[1].indexOf((int)':') < 0) {
-	db = "jdbc:odbc:" + args[1];
-      } else db = args[1];
-      break;
-    default:
+      case 0:
+        direct = true;
+        break;
+      case 1:
+        direct = true;
+        if (args[0].indexOf((int)':') < 0) {
+          db = "jdbc:odbc:" + args[0];
+        } else db = args[0];
+        break;
+      case 2:
+        host = args[0];
+        if (args[1].indexOf((int)':') < 0) {
+          db = "jdbc:odbc:" + args[1];
+        } else db = args[1];
+        break;
+      default:
     }
 
     cons = new Connections();
     if (direct) {
-      try {
-	  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-      } catch (ClassNotFoundException e) {
-	System.out.println(e.getMessage());
-      }
       if (cons.createDirectConnection
-	  (db, user, password, dbName, charConversion) == false) {
-	connectFailed();
-	return;
+              (db, user, password, dbName, charConversion) == false) {
+        connectFailed();
+        return;
       }
     } else {
       if (cons.createConnection
-	  (host, db, user, password, dbName, charConversion) == false) {
-	connectFailed();
-	return;
+              (host, db, user, password, dbName, charConversion) == false) {
+        connectFailed();
+        return;
       }
     }
     Main f = new Main(cons.getQM(dbName));
