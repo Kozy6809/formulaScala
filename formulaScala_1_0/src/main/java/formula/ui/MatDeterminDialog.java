@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 public class MatDeterminDialog extends JDialog {
-  private JList candidates;
+  private JList<String> candidates;
   private boolean canceled = true;
   public MatDeterminDialog() {
     super();
@@ -49,7 +49,7 @@ public class MatDeterminDialog extends JDialog {
   /**
    * @return javax.swing.JList
    */
-  public JList getList() {
+  public JList<String> getList() {
     return candidates;
   }
   private void init() {
@@ -58,7 +58,7 @@ public class MatDeterminDialog extends JDialog {
     JLabel l = new JLabel("次のリストから選んで下さい", SwingConstants.CENTER);
     l.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
     cp.add(l, BorderLayout.NORTH);
-    candidates = new JList();
+    candidates = new JList<String>();
     candidates.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane sp = new JScrollPane(candidates);
     cp.add(sp, BorderLayout.CENTER);

@@ -4,13 +4,12 @@
  */
 
 package formula
-
 import javax.persistence._
 
 @Entity
 @Table(name="form2")
 @Access(AccessType.FIELD)
-final class Form2 {
+final class Form2 extends Common2 {
   @Id
   var pcode:Int =_
   var date :java.sql.Timestamp =_
@@ -19,11 +18,10 @@ final class Form2 {
   var comment:String =_
   var reason:String =_
   var confDate:java.sql.Timestamp =_
-  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "form2")
-  var form1:java.util.List[Form1] =_
+  type T = Form1
+  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "common2")
+  var common1:java.util.List[T] =_
 
-  override def toString() = pcode +" "+ date +" "+ sg +" "+ person +" "+
-  comment +" "+ reason +" "+ confDate
   override def hashCode = pcode
   override def equals(o:Any) = o match {
     case f:Form2 => f.pcode == pcode

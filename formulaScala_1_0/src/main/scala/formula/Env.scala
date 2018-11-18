@@ -4,9 +4,10 @@
  */
 
 package formula
+import javax.persistence._
 
 import java.awt.Component
-import javax.persistence._
+
 import javax.swing.JOptionPane
 
 

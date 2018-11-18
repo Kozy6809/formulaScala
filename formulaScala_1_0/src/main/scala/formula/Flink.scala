@@ -7,18 +7,16 @@ package formula
 import javax.persistence._
 
 @Entity
-@Table(name="authorize")
+@Table(name="flink")
 @Access(AccessType.FIELD)
-final class Authorize {
-  var person:String =_
-  var kana:String =_
-  var password:String =_
+final class Flink {
+  var linkID: Int =_
   @Id
-  var id:Int =_
-  
-  override def hashCode = id
+  var pcode: Int =_
+
+  override def hashCode = linkID
   override def equals(o:Any) = o match {
-    case a:Authorize => a.id == id
+    case f: Flink => f.linkID == linkID
     case _ => false
   }
 

@@ -18,7 +18,7 @@ public class Main implements IGlobalErrorHandler {
   private static final String dbName = "formula";
   private static Connections cons = null;
   private QueryManager qm = null;
-  private MainViewC mvc = null;
+  private MainC mvc = null;
   private static Vector wins = new Vector(); // ウィンドウコントローラのリスト
 
   /**
@@ -89,7 +89,7 @@ public class Main implements IGlobalErrorHandler {
    */
   private void go() {
     qm.setGEH(this);
-    mvc = new MainViewC(this, qm);
+    mvc = new MainC();
     sp.setVisible(false);
     String[] s = null;
   }

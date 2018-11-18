@@ -5,14 +5,13 @@
 
 package formula
 
+import java.awt.datatransfer.StringSelection
+import java.sql.{Date, Timestamp}
 import java.text.DateFormat
 import javax.persistence._
-import java.awt.datatransfer.StringSelection
-import java.sql.Date
-import java.sql.Timestamp
+import scala.swing._
+import collection.JavaConverters._
 import javax.swing.table.AbstractTableModel
-import collection.JavaConversions._
-import scala.swing.Swing.onEDT
 
 
 /**
@@ -56,7 +55,7 @@ class ConfReg {
   private val crtm = new CRTableModel()
   private val crv = new formula.ui.ConfRegV(this, crtm);
   crv.pack();
-  onEDT {
+  Swing.onEDT {
     crtm.fireTableDataChanged()
     crv.setVisible(true)
   }
@@ -65,7 +64,7 @@ class ConfReg {
    * データをクリップボードにコピーする。登録日、製造コード、品種、品名、登録者
    */
   def copyToClip() {
-    val s = data.mkString("", "\n","\n")
+    val s = data.asScala.mkString("", "\n","\n")
     val cb = crv.getToolkit.getSystemClipboard
     val ss = new StringSelection(s)
     cb.setContents(ss, ss)
@@ -77,7 +76,7 @@ class ConfReg {
     ft.begin
     ht.begin
     val d = new Timestamp(System.currentTimeMillis)
-    for (r <- data if r.checked) {
+    for (r <- data.asScala if r.checked) {
       updateHolbeinM(r, d)
       val f = fem.find(classOf[Form2], r.pcode)
       f.confDate = d
@@ -156,10 +155,10 @@ class ConfReg {
     // f.Form1からFmasterを生成する。percentをFloatからDoubleに変換する際に
     // 小数点以下3位までの丸め処理を行っている
     def form1toFmaster(f:Form1):Fmaster = 
-      new Fmaster(new FmasterPK(f.pk.pcode, f.pk.order), pcodeNew, f.mcode,
+      new Fmaster(new FmasterPK(f.pcode, f.order), pcodeNew, f.mcode,
                   float2double(f.percent))
 
-    f.form1.map(form1toFmaster).foreach(hem.persist)
+    f.common1.asScala.map(form1toFmaster _).foreach(hem.persist _)
   }
   def close() {
     crv.dispose

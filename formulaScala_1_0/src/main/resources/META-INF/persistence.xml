@@ -6,10 +6,10 @@
     <class>formula.Fmaster</class>
     <class>formula.Pmaster</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:holbeinm"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
-      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
-      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=holbeinm;integratedSecurity=false;user=formulaApp;password=formulaApp"/>
+      <property name="javax.persistence.jdbc.password" value="formulaApp"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.user" value="formulaApp"/>
     </properties>
   </persistence-unit>
   <persistence-unit name="formulaPU" transaction-type="RESOURCE_LOCAL">
@@ -19,10 +19,10 @@
     <class>formula.Form1</class>
     <class>formula.Form2</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:formula"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
-      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
-      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=formula;integratedSecurity=false;user=formulaApp;password=formulaApp"/>
+      <property name="javax.persistence.jdbc.password" value="formulaApp"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.user" value="formulaApp"/>
     </properties>
   </persistence-unit>
 </persistence>

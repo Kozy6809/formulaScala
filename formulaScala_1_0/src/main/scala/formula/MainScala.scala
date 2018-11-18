@@ -4,7 +4,6 @@
  */
 
 package formula
-
 import javax.persistence._
 
 /**
@@ -16,8 +15,7 @@ object MainScala {
    * @param args the command line arguments
    */
   def main(args: Array[String]): Unit = {
-    val emf = Persistence.createEntityManagerFactory("formulaPU")
-    val em = emf.createEntityManager
+    new MainC()
 //    val q = em.createQuery("select new ivview.Cmaster(c.ccode, c.cname) from ConvertQC c")
 //    val r = q.getResultList
 //    println(r)
@@ -35,8 +33,11 @@ object MainScala {
 //    println(q.getResultList)
 //    val c = em.find(classOf[Fmaster], new FmasterPK(500013,1))
 //    println(c)
-    val c = em.find(classOf[Form2], 500013)
-    println(c)
+
+//    val emf = Persistence.createEntityManagerFactory("formulaPU")
+//    val em = emf.createEntityManager
+//    val c = em.find(classOf[Form2], 500013)
+//    println(c)
   }
 
 }

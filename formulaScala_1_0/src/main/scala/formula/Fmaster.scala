@@ -4,7 +4,6 @@
  */
 
 package formula
-
 import javax.persistence._
 
 /**
@@ -13,34 +12,34 @@ import javax.persistence._
 @Entity
 @Table(name="mtbl製造処方マスタ")
 @Access(AccessType.FIELD)
-final class Fmaster(pk_ :FmasterPK, pcodeNew_ :Int, mcode_ :Int, percent_ :Double) {
+final class Fmaster(_pk: FmasterPK, _pcodeNew: Int, _mcode: Int, _percent: Double) {
   @EmbeddedId
-  var pk:FmasterPK = pk_
+  var pk:FmasterPK = _pk
   @Column(name = "製造コード")
-  var pcodeNew:Int = pcodeNew_
+  var pcodeNew: Int = _pcodeNew
   @Column(name = "処方コード")
-  var mcode:Int = mcode_ // 技術データ
+  var mcode: Int = _mcode // 技術データ
   @Column(name = "比率")
-  var percent:Double = percent_ // 技術データ
-  def this() = this(new FmasterPK,0,0,0.0)
+  var percent: Double = _percent // 技術データ
+  def this() = this(null, 0, 0, 0.0)
   override def toString = pk.pcode+" "+pk.order+" "+pcodeNew+" "+mcode+" "+percent
   override def hashCode = pk.hashCode
-  override def equals(o:Any) = o match {
-    case f:Fmaster => f.pk equals pk
+  override def equals(o: Any) = o match {
+    case f: Fmaster => f.pk equals pk
     case _ => false
   }
 }
 
 @Embeddable
-final class FmasterPK(p:Int, o:Short) {
+final class FmasterPK(_pcode: Int, _order: Short) {
   @Column(name = "製造コード旧")
-  var pcode:Int = p // 技術データ
+  var pcode:Int = _pcode // 技術データ
   @Column(name = "処方順")
-  var order:Short = o // 技術データ
-  def this() = this(0,0)
-  override def hashCode = 41 * (41 + pcode) + order
-  override def equals(o:Any) = o match {
-    case f:FmasterPK => f.pcode == pcode && f.order == order
+  var order: Short = _order // 技術データ
+  def this() = this(0, 0)
+  override def hashCode = 41 * pcode + order
+  override def equals(o: Any) = o match {
+    case f: FmasterPK => f.pcode == pcode && f.order == order
     case _ => false
   }
 }

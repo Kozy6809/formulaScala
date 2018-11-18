@@ -4,7 +4,6 @@
  */
 
 package formula
-
 import javax.persistence._
 
 @Entity

@@ -12,9 +12,9 @@ import formula.*;
  * この型は VisualAge で作成されました。
  */
 public class MainView extends JFrame {
-  private MainViewC mvc;
-  private JList seriesList = new JList();
-  private JList resultList = new JList();
+  private MainC mvc;
+  private JList<String> seriesList = new JList<>();
+  private JList<String> resultList = new JList<>();
   private NumberField codeField = new NumberField();
   private JTextField nameField = new JTextField();
   private int searchMode = 0;
@@ -25,7 +25,7 @@ public class MainView extends JFrame {
   /**
    * MainView コンストラクター・コメント。
    */
-  public MainView(MainViewC mvc) {
+  public MainView(MainC mvc) {
     super();
     this.mvc = mvc;
     prefs = Preferences.userNodeForPackage(MainView.class);
@@ -60,7 +60,7 @@ public class MainView extends JFrame {
   /**
    * @return javax.swing.JList
    */
-  public JList getResultList() {
+  public JList<String> getResultList() {
     return resultList;
   }
   /**
@@ -91,7 +91,7 @@ public class MainView extends JFrame {
   /**
    * @return javax.swing.JList
    */
-  public JList getSeriesList() {
+  public JList<String> getSeriesList() {
     return seriesList;
   }
   /**
@@ -263,7 +263,7 @@ public class MainView extends JFrame {
     codeField.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
 	nameField.setText("");
-	mvc.clearResult();
+//	mvc.clearResult();
 	getResultList().clearSelection();
 	mvc.searchByCode(seriesList.getSelectedValues(), getSearchCode(), searchMode);
       }
@@ -273,7 +273,7 @@ public class MainView extends JFrame {
       public void actionPerformed(ActionEvent e) {
 	codeField.setText("");
 	getResultList().clearSelection();
-	mvc.clearResult();
+//	mvc.clearResult();
 	mvc.searchByName(seriesList.getSelectedValues(), getSearchName(), searchMode);
       }
     });
