@@ -38,14 +38,16 @@ class MainC extends MatDetermin {
    */
   private def searchBy(queryByProd: => List[_], determinMat: => Option[Mcode], setNoneText: => Unit,
     series: java.util.List[String], mode: Int): Unit = {
-    resultData = if (mode == 0) queryByProd // 製品による検索
+    resultData = if (mode == 0) {
+      mv.setObsoleteStatus(0)
+      queryByProd
+    } // 製品による検索
     else {
       val m = determinMat // 資材を確定させる
       m match {
         case None => setNoneText; List.empty
         case Some(determined) => { // 確定した資材による検索
-          mv.getCodeField.setForeground(obsColor(determined.status))
-          mv.getNameField.setForeground(obsColor(determined.status))
+          mv.setObsoleteStatus(determined.status)
           mv.getCodeField.setText(determined.mcode.toString)
           mv.getNameField.setText(determined.mname)
           if (mode == 1) queryNormalByMat(series, determined.mcode)

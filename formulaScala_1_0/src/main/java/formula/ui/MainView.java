@@ -26,6 +26,7 @@ public class MainView extends JFrame {
     private int searchMode = 0;
     private JLabel selectedNames = new JLabel("全品種");
     private boolean allSeriesSelected = true;
+    private final Color[] obsColor = {Color.black, Color.magenta, Color.red};
 
     private Preferences prefs;
 
@@ -272,6 +273,15 @@ public class MainView extends JFrame {
                 mvc.exit();
             }
         });
+    }
+
+    /**
+     * codeFieldとnameFieldの表示色を廃番状態に応じて設定する
+     * @param status 0-現行 1-廃番予定 2-廃番
+     */
+    public void setObsoleteStatus(int status) {
+        codeField.setForeground(obsColor[status]);
+        nameField.setForeground(obsColor[status]);
     }
 }
 /*
