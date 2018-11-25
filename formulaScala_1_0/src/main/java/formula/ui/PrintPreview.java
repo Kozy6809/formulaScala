@@ -37,7 +37,7 @@ public class PrintPreview extends JFrame {
       if (printPrp != null) {
 	try {
 	  FileOutputStream fos = new FileOutputStream("print.prp");
-	  printPrp.save(fos, "print property");
+	  printPrp.store(fos, "print property");
 	  fos.close();
 	} catch (IOException e) {e.printStackTrace();}	
       }	

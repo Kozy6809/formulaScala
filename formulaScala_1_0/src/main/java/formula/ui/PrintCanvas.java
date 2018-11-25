@@ -60,8 +60,7 @@ public class PrintCanvas extends java.awt.Canvas {
     return v;
   }
   private void drawText (Graphics g, String s, int width, int maxLine) {
-    Font f = g.getFont();
-    FontMetrics fm = getToolkit().getFontMetrics(f);
+    FontMetrics fm = g.getFontMetrics();
     int lineHeight = fm.getHeight();
     Vector v = alignText(s, fm, width);
     if (v == null) return;
@@ -102,8 +101,7 @@ public class PrintCanvas extends java.awt.Canvas {
     int y = 0;
     String title = "処方連絡書";
     String outDate = "印字日:" + java.text.DateFormat.getDateInstance().format(new Date());
-    Font f = g.getFont();
-    FontMetrics fm = getToolkit().getFontMetrics(f);
+    FontMetrics fm = g.getFontMetrics();
     int lineHeight = fm.getHeight();
     int sw = fm.stringWidth(title);
     g.drawString(title, (ewidth-sw)/2, lineHeight*2);
@@ -216,8 +214,7 @@ public class PrintCanvas extends java.awt.Canvas {
     int y = 0;
     String title = "分解処方";
     String outDate = "印字日:" + java.text.DateFormat.getDateInstance().format(new Date());
-    Font f = g.getFont();
-    FontMetrics fm = getToolkit().getFontMetrics(f);
+    FontMetrics fm = g.getFontMetrics();
     int lineHeight = fm.getHeight();
     int sw = fm.stringWidth(title);
     g.drawString(title, (ewidth-sw)/2, lineHeight*2);

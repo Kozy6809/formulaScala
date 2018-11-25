@@ -37,7 +37,7 @@ class MainC extends MatDetermin {
    * searchByCodeとsearchByNameの共通構造を抽象化する
    */
   private def searchBy(queryByProd: => List[_], determinMat: => Option[Mcode], setNoneText: => Unit,
-    series: Array[AnyRef], mode: Int) = {
+    series: java.util.List[String], mode: Int): Unit = {
     resultData = if (mode == 0) queryByProd // 製品による検索
     else {
       val m = determinMat // 資材を確定させる
@@ -59,12 +59,12 @@ class MainC extends MatDetermin {
   /**
    * コード指定による検索を実行する。
    */
-  def searchByCode(series: Array[AnyRef], code: Int, mode: Int) =
+  def searchByCode(series: java.util.List[String], code: Int, mode: Int) =
     searchBy(queryByPcode(code), determinByMcode(code), mv.getNameField.setText("該当なし"), series, mode)
   /**
    * 名前による検索を実行する
    */
-  def searchByName(series: Array[AnyRef], name: String, mode: Int) {
+  def searchByName(series: java.util.List[String], name: String, mode: Int) {
     val rname = name.replace('*', '%').replace('?', '_')
     searchBy(queryByPname(series, rname), determinByMname(rname), mv.getCodeField.setText(""), series, mode)
   }
@@ -105,7 +105,7 @@ class MainC extends MatDetermin {
   /**
    * 製品名による検索と確定した資材コードによる検索(通常処方及び分解処方)は、
    * クエリー文字列が違う以外はほぼ同一であり、この共通構造を抽象化する
-   * @param T クエリーが返すエンティティクラスの型。PcodeかArray[AnyRef]
+   * @param T クエリーが返すエンティティクラスの型。queryByPnameではPcode、他はArray[AnyRef]
    * @param P クエリーパラメータの型。IntかString
    * @param queryFromAll 特定の品種が選ばれていない時の検索クエリー文字列
    * @param queryFromSeries 特定の品種が選ばれている時の検索クエリー文字列
@@ -113,13 +113,14 @@ class MainC extends MatDetermin {
    * @return 品種配列と検索パラメータを取り、検索結果を返す関数
    */
   private def genQuery[T, P](queryFromAll: String, queryFromSeries: String, c: Class[T]) = {
-    (seriesArray: Array[AnyRef], p: P) =>
+    (selectedSeries: java.util.List[String], p: P) =>
       {
         def fromAll = em.createQuery(queryFromAll, c).setParameter("p1", p).getResultList.toList
-        def fromSeries(series: AnyRef) = em.createQuery(queryFromSeries, c)
+        def fromSeries(series: String) = em.createQuery(queryFromSeries, c)
           .setParameter("p1", series).setParameter("p2", p).getResultList.toList
-        if (seriesArray.size == 0) fromAll
-        else seriesArray.toList.flatMap(fromSeries)
+
+        if (selectedSeries.size == 0) fromAll
+        else selectedSeries.toList.flatMap(fromSeries)
       }
   }
   private val queryByPname = genQuery[Pcode, String](
@@ -131,27 +132,29 @@ class MainC extends MatDetermin {
   // これを回避するため、f.percent+0.0として型をDoubleにしている。
   private val queryNormalByMat = genQuery[Array[AnyRef], Int](
     "select p, sum(f.percent) from Pcode p, Form1 f " +
-      "where p.pcode = f.pk.pcode and f.mcode = :p1 group by p " +
+      "where p.pcode = f.pcode and f.mcode = :p1 group by p " +
       "order by sum(f.percent) desc, p.pcode",
     "select p, sum(f.percent) from Pcode p, Form1 f " +
-      "where p.pcode = f.pk.pcode and p.series = :p1 and f.mcode = :p2 group by p " +
+      "where p.pcode = f.pcode and p.series = :p1 and f.mcode = :p2 group by p " +
       "order by sum(f.percent) desc, p.pcode",
     classOf[Array[AnyRef]])
   private val queryResolvfByMat = genQuery[Array[AnyRef], Int](
-    "select p, f.percent + 0.0 from Pcode p, Resolvf f where p.pcode = f.pk.pcode " +
-      "and f.pk.mcode = :p1 order by f.percent desc, p.pcode",
-    "select p, f.percent + 0.0 from Pcode p, Resolvf f where p.pcode = f.pk.pcode " +
-      "and p.series = :p1 and f.pk.mcode = :p2 order by f.percent desc, p.pcode",
+    "select p, f.percent + 0.0 from Pcode p, Resolvf f where p.pcode = f.pcode " +
+      "and f.mcode = :p1 order by f.percent desc, p.pcode",
+    "select p, f.percent + 0.0 from Pcode p, Resolvf f where p.pcode = f.pcode " +
+      "and p.series = :p1 and f.mcode = :p2 order by f.percent desc, p.pcode",
     classOf[Array[AnyRef]])
+
   private def queryByPcode(code: Int) =
     em.createQuery("select p from Pcode p where p.pcode = :pcode", classOf[Pcode])
       .setParameter("pcode", code).getResultList.toList
 
-  def exit { println("exit invoked"); System.exit(0) }
-  def showNMC {}
-  def showNPC {}
-  def showFLC {}
-  def showCRC {}
+  def exit() : Unit = { println("exit invoked"); System.exit(0) }
+  def showMGU() : Unit = ???
+  def showNMC() : Unit = ???
+  def showNPC() : Unit = ???
+  def showFLC() : Unit = ???
+  def showCRC() : Unit = ???
   def showFBrowser(ix: Array[Int]) {
     if (resultData.size > 0) { // データサイズが0でも、1行目の"該当なし"が選択されてこのメソッドが呼ばれる可能性がある
       ix foreach {
