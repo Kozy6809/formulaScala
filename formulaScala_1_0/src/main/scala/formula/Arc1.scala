@@ -15,9 +15,13 @@ final class Arc1 extends Common1 {
   @Id
   var date: java.sql.Timestamp =_
   var mcode: Int =_
+  @Column(name = "[PERCENT]")
   var percent: Float =_
   type T = Arc2
-  @JoinColumn(name = "PCODE", referencedColumnName = "PCODE", insertable = false, updatable = false)
+  @JoinColumns(Array(
+    new JoinColumn(name = "PCODE", referencedColumnName = "PCODE", insertable = false, updatable = false),
+    new JoinColumn(name = "DATE", referencedColumnName = "DATE", insertable = false, updatable = false)
+  ))
   @ManyToOne(optional = false)
   var common2: T = _
 

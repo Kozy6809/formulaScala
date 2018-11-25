@@ -17,27 +17,35 @@ class MainC extends MatDetermin {
   mv.setVisible(true)
 
   def getMV = mv
+
   private object Obsolete extends Enumeration {
     val O0 = Value("")
     val O1 = Value("廃番予定 ")
     val O2 = Value("廃番 ")
   }
+
   private val obsColor = Array(Color.black, Color.magenta, Color.red)
+
   private class SeriesListModel extends AbstractListModel[String] {
     private val data =
       em.createQuery("select distinct p.series from Pcode p order by p.series", classOf[String]).getResultList.toList
+
     override def getElementAt(ix: Int) = data(ix)
+
     override def getSize = data.size
   }
+
   private class ResultListModel(private var data: List[String]) extends AbstractListModel[String] {
     override def getElementAt(ix: Int) = if (data.size == 0) "該当なし" else data(ix)
+
     override def getSize = if (data.size == 0) 1 else data.size
   }
+
   /**
-   * searchByCodeとsearchByNameの共通構造を抽象化する
-   */
+    * searchByCodeとsearchByNameの共通構造を抽象化する
+    */
   private def searchBy(queryByProd: => List[_], determinMat: => Option[Mcode], setNoneText: => Unit,
-    series: java.util.List[String], mode: Int): Unit = {
+                       series: java.util.List[String], mode: Int): Unit = {
     resultData = if (mode == 0) {
       mv.setObsoleteStatus(0)
       queryByProd
@@ -58,43 +66,53 @@ class MainC extends MatDetermin {
     mv.getResultList.setModel(new ResultListModel(formatResult))
     em.clear()
   }
+
   /**
-   * コード指定による検索を実行する。
-   */
+    * コード指定による検索を実行する。
+    */
   def searchByCode(series: java.util.List[String], code: Int, mode: Int) =
     searchBy(queryByPcode(code), determinByMcode(code), mv.getNameField.setText("該当なし"), series, mode)
+
   /**
-   * 名前による検索を実行する
-   */
+    * 名前による検索を実行する
+    */
   def searchByName(series: java.util.List[String], name: String, mode: Int) {
     val rname = name.replace('*', '%').replace('?', '_')
     searchBy(queryByPname(series, rname), determinByMname(rname), mv.getCodeField.setText(""), series, mode)
   }
+
   /**
-   * 検索結果を表示用に整形する
-   */
+    * 検索結果を表示用に整形する
+    */
   private def formatResult: List[String] = {
     val nf = NumberFormat.getPercentInstance
     nf.setMinimumFractionDigits(3)
     nf.setMaximumFractionDigits(3)
+
     def formatPcode(p: Pcode) = "" + Obsolete(p.obsolete) + p.pcode + " " + p.series + " " + p.name
+
     def formatPercent(p: Pcode, percent: Double) =
       Obsolete(p.obsolete) + nf.format(percent / 100) + " " + p.pcode + " " + p.series + " " + p.name
+
     resultData.map {
       case p: Pcode => formatPcode(p)
       case a: Array[AnyRef] => formatPercent(a(0).asInstanceOf[Pcode], a(1).asInstanceOf[Double])
     }
   }
+
   /**
-   * 検索結果をクリップボードにコピーする
-   */
+    * 検索結果をクリップボードにコピーする
+    */
   def copyToClip {
     val nf = NumberFormat.getInstance
     nf.setMinimumFractionDigits(3)
     nf.setMaximumFractionDigits(3)
+
     def formatPcode(p: Pcode) = "" + p.pcode + "\t" + p.series + "\t" + p.name + "\t" + Obsolete(p.obsolete)
+
     def formatPercent(p: Pcode, percent: Double) =
       p.pcode + "\t" + p.series + "\t" + p.name + "\t" + nf.format(percent) + "\t" + Obsolete(p.obsolete)
+
     val r = resultData.map {
       case p: Pcode => formatPcode(p)
       case a: Array[AnyRef] => formatPercent(a(0).asInstanceOf[Pcode], a(1).asInstanceOf[Double])
@@ -105,26 +123,28 @@ class MainC extends MatDetermin {
   }
 
   /**
-   * 製品名による検索と確定した資材コードによる検索(通常処方及び分解処方)は、
-   * クエリー文字列が違う以外はほぼ同一であり、この共通構造を抽象化する
-   * @param T クエリーが返すエンティティクラスの型。queryByPnameではPcode、他はArray[AnyRef]
-   * @param P クエリーパラメータの型。IntかString
-   * @param queryFromAll 特定の品種が選ばれていない時の検索クエリー文字列
-   * @param queryFromSeries 特定の品種が選ばれている時の検索クエリー文字列
-   * @param c classOf[T]
-   * @return 品種配列と検索パラメータを取り、検索結果を返す関数
-   */
+    * 製品名による検索と確定した資材コードによる検索(通常処方及び分解処方)は、
+    * クエリー文字列が違う以外はほぼ同一であり、この共通構造を抽象化する
+    *
+    * @param T               クエリーが返すエンティティクラスの型。queryByPnameではPcode、他はArray[AnyRef]
+    * @param P               クエリーパラメータの型。IntかString
+    * @param queryFromAll    特定の品種が選ばれていない時の検索クエリー文字列
+    * @param queryFromSeries 特定の品種が選ばれている時の検索クエリー文字列
+    * @param c               classOf[T]
+    * @return 品種配列と検索パラメータを取り、検索結果を返す関数
+    */
   private def genQuery[T, P](queryFromAll: String, queryFromSeries: String, c: Class[T]) = {
-    (selectedSeries: java.util.List[String], p: P) =>
-      {
-        def fromAll = em.createQuery(queryFromAll, c).setParameter("p1", p).getResultList.toList
-        def fromSeries(series: String) = em.createQuery(queryFromSeries, c)
-          .setParameter("p1", series).setParameter("p2", p).getResultList.toList
+    (selectedSeries: java.util.List[String], p: P) => {
+      def fromAll = em.createQuery(queryFromAll, c).setParameter("p1", p).getResultList.toList
 
-        if (selectedSeries.size == 0) fromAll
-        else selectedSeries.toList.flatMap(fromSeries)
-      }
+      def fromSeries(series: String) = em.createQuery(queryFromSeries, c)
+        .setParameter("p1", series).setParameter("p2", p).getResultList.toList
+
+      if (selectedSeries.size == 0) fromAll
+      else selectedSeries.toList.flatMap(fromSeries)
+    }
   }
+
   private val queryByPname = genQuery[Pcode, String](
     "select p from Pcode p where p.name like :p1",
     "select p from Pcode p where p.series = :p1 and p.name like :p2",
@@ -151,12 +171,20 @@ class MainC extends MatDetermin {
     em.createQuery("select p from Pcode p where p.pcode = :pcode", classOf[Pcode])
       .setParameter("pcode", code).getResultList.toList
 
-  def exit() : Unit = { println("exit invoked"); System.exit(0) }
-  def showMGU() : Unit = ???
-  def showNMC() : Unit = ???
-  def showNPC() : Unit = ???
-  def showFLC() : Unit = ???
-  def showCRC() : Unit = ???
+  def exit(): Unit = {
+    println("exit invoked"); System.exit(0)
+  }
+
+  def showMGU(): Unit = ???
+
+  def showNMC(): Unit = ???
+
+  def showNPC(): Unit = ???
+
+  def showFLC(): Unit = ???
+
+  def showCRC(): Unit = ???
+
   def showFBrowser(ix: Array[Int]) {
     if (resultData.size > 0) { // データサイズが0でも、1行目の"該当なし"が選択されてこのメソッドが呼ばれる可能性がある
       ix foreach {

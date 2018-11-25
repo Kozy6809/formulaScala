@@ -13,11 +13,11 @@ trait MatDetermin {
 
   private def queryByMcode(code: Int): java.util.List[Mcode]  =
     em.createQuery("select m from Mcode m where m.mcode = :mcode", classOf[Mcode])
-      .setParameter("mcode", code).getResultList
+      .setParameter("mcode", code).getResultList.toList
 
   private def queryByMname(name: String): java.util.List[Mcode] =
     em.createQuery("select m from Mcode m where m.mname like :mname order by m.mname", classOf[Mcode])
-      .setParameter("mname", name).getResultList
+      .setParameter("mname", name).getResultList.toList
 
   private class ResultListModel(data: Array[Mcode]) extends AbstractListModel[String] {
     def getElementAt(index: Int): String = {
@@ -40,14 +40,14 @@ trait MatDetermin {
     }
   }
   protected def determinByMname(name: String): Option[Mcode] = {
-    val r = queryByMname(name).toArray.asInstanceOf[Array[Mcode]]
+    val r = queryByMname(name)
     em.clear()
     r.size match {
       case 0 => None
-      case 1 => Some(r(0))
+      case 1 => Some(r(0).asInstanceOf[Mcode])
       case _ => {
-        val md = new MatDeterminDialog(f)
-        md.getList.setModel(new ResultListModel(r.asInstanceOf[Array[Mcode]]))
+        val md = new MatDeterminDialog(f, true)
+        md.getList.setModel(new ResultListModel(r.map(_.asInstanceOf[Mcode]).toArray))
         md.pack()
         md.setVisible(true)
         val ix = md.getList.getSelectedIndex

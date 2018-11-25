@@ -9,7 +9,7 @@ import javax.persistence._
 @Entity
 @Table(name="mcode")
 @Access(AccessType.FIELD)
-final class Mcode {
+class Mcode {
   @Id
   var mcode: Int =_
   var mname: String =_

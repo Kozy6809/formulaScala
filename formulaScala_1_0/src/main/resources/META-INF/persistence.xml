@@ -16,8 +16,15 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>formula.Authorize</class>
     <class>formula.Pcode</class>
+    <class>formula.Mcode</class>
     <class>formula.Form1</class>
     <class>formula.Form2</class>
+    <class>formula.Arc1</class>
+    <class>formula.Arc2</class>
+    <class>formula.Flink</class>
+    <class>formula.Resolvf</class>
+    <class>formula.ToxIx</class>
+    <class>formula.ToxMcode</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=formula;integratedSecurity=false;user=formulaApp;password=formulaApp"/>
       <property name="javax.persistence.jdbc.password" value="formulaApp"/>

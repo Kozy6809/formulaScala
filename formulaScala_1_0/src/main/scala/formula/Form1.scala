@@ -12,6 +12,7 @@ final class Form1 extends Common1 {
   var order: Short =_
   var date:java.sql.Timestamp =_
   var mcode:Int =_
+  @Column(name = "[PERCENT]")
   var percent:Float =_
   type T = Form2
   @JoinColumn(name = "PCODE", referencedColumnName = "PCODE", insertable = false, updatable = false)
