@@ -15,6 +15,7 @@ final class Resolvf(pcode_ : Int, mcode_ : Int, percent_ : Float) {
   var pcode: Int = pcode_
   @Id
   var mcode: Int = mcode_
+  @Column(name = "[PERCENT]")
   var percent: Float = percent_
 
   def this() = this(0, 0, 0.0f)

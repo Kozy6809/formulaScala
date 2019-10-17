@@ -9,6 +9,7 @@ final class Form1 extends Common1 {
   @Id
   var pcode: Int =_
   @Id
+  @Column(name = "[ORDER]")
   var order: Short =_
   var date:java.sql.Timestamp =_
   var mcode:Int =_

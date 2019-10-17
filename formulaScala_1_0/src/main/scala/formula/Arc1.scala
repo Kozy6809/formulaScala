@@ -11,6 +11,7 @@ final class Arc1 extends Common1 {
   @Id
   var pcode: Int =_
   @Id
+  @Column(name = "[ORDER]")
   var order: Short =_
   @Id
   var date: java.sql.Timestamp =_

@@ -1,4 +1,4 @@
-package formula.ui;
+package formula.ui.java;
 
 import java.util.*;
 import java.awt.*;

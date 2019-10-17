@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.table.*;
 import formula.*;
 import myui.*;
 
@@ -11,7 +12,7 @@ import myui.*;
  * この型は VisualAge で作成されました。
  */
 public class FBrowseView extends JFrame {
-    private FBrowseC fbvc;
+    private FBrowseC fbc;
     private JLabel lDate = new JLabel("date");
     private JLabel lPerson = new JLabel("person");
     private NumberField tSG = new NumberField("0");
@@ -31,7 +32,7 @@ public class FBrowseView extends JFrame {
      */
     public FBrowseView(FBrowseC fbvc, String title) {
         super(title);
-        this.fbvc = fbvc;
+        this.fbc = fbvc;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         init();
     }
@@ -115,62 +116,34 @@ public class FBrowseView extends JFrame {
         mb.add(m);
         JMenuItem mi = new JMenuItem("クリップボードへコピー(C)");
         mi.setMnemonic('C');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-//                fbvc.copyToClip(miShowNorm.isSelected());
-            }
-        });
+        mi.addActionListener(e -> fbc.copyToClip(miShowNorm.isSelected()));
         m.add(mi);
         mi = new JMenuItem("更新権限の設定(A)");
         mi.setMnemonic('A');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.authorize();
-            }
-        });
+        mi.addActionListener(e -> fbc.authorize());
         m.add(mi);
         mi = new JMenuItem("処方の更新(U)");
         mi.setMnemonic('U');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.update();
-            }
-        });
+        mi.addActionListener(e -> fbc.update());
         m.add(mi);
         mi = new JMenuItem("クローズ(X)");
         mi.setMnemonic('X');
         m.add(mi);
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.requestClose();
-            }
-        });
+        mi.addActionListener(e -> fbc.requestClose());
         m = new JMenu("表示(S)");
         m.setMnemonic('S');
         mb.add(m);
         mi = new JMenuItem("履歴リスト(H)");
         mi.setMnemonic('H');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.showHistory();
-            }
-        });
+        mi.addActionListener(e -> fbc.showHistory());
         m.add(mi);
         mi = new JMenuItem("処方リンク状況(L)");
         mi.setMnemonic('L');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.showLinkList();
-            }
-        });
+        mi.addActionListener(e -> fbc.showLinkList());
         m.add(mi);
         mi = new JMenuItem("毒性レポート(P)");
         mi.setMnemonic('P');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.showPoisonList();
-            }
-        });
+        mi.addActionListener(e -> fbc.showPoisonList());
         m.add(mi);
         m.add(new JSeparator());
         ButtonGroup bg = new ButtonGroup();
@@ -178,42 +151,26 @@ public class FBrowseView extends JFrame {
         mi = miShowNorm;
         mi.setMnemonic('N');
         mi.setSelected(true);
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.showNorm();
-            }
-        });
+        mi.addActionListener(e -> fbc.showNorm());
         bg.add(mi);
         m.add(mi);
         mi = new JRadioButtonMenuItem("分解処方(D)");
         mi.setMnemonic('D');
         bg.add(mi);
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fbvc.showDecomp();
-            }
-        });
+        mi.addActionListener(e -> fbc.showDecomp());
         m.add(mi);
         m.add(new JSeparator());
         mi = new JMenuItem("毒性の再計算(R)");
         mi.setMnemonic('R');
         bg.add(mi);
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-//                fbvc.recalcPoison();
-            }
-        });
+        mi.addActionListener(e -> fbc.recalcPoison());
         m.add(mi);
         m = new JMenu("印刷(P)");
         m.setMnemonic('P');
         mb.add(m);
         mi = new JMenuItem("印刷(P)");
         mi.setMnemonic('P');
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-//                fbvc.print(miShowNorm.isSelected());
-            }
-        });
+        mi.addActionListener(e -> fbc.print(miShowNorm.isSelected()));
         m.add(mi);
 
         p0 = new JPanel(new BorderLayout());
@@ -283,7 +240,7 @@ public class FBrowseView extends JFrame {
         setEditable(false);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                fbvc.requestClose();
+                fbc.requestClose();
             }
         });
     }
@@ -298,21 +255,21 @@ public class FBrowseView extends JFrame {
         JMenuItem mi = new JMenuItem("1行挿入");
         mi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fbvc.insertRow(rowOnPopup);
+                fbc.insertRow(rowOnPopup);
             }
         });
         pm.add(mi);
         mi = new JMenuItem("1行削除");
         mi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fbvc.deleteRow(rowOnPopup);
+                fbc.deleteRow(rowOnPopup);
             }
         });
         pm.add(mi);
         mi = new JMenuItem("下行と交換");
         mi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fbvc.exchangeRow(rowOnPopup);
+                fbc.exchangeRow(rowOnPopup);
             }
         });
         pm.add(mi);
@@ -323,61 +280,60 @@ public class FBrowseView extends JFrame {
      * このメソッドは VisualAge で作成されました。
      */
     private void initTable() {
-//        IFormulaModel fm = fbvc.getFM();
-//        TableColumnModel tcm = new DefaultTableColumnModel();
-//        FormulaCellRenderer fcr = new FormulaCellRenderer(fm, this, SwingConstants.CENTER);
-//        final NumberField nf = new NumberField();
-//        EmptyTextCellEditor etce = new EmptyTextCellEditor(nf) {
-//            public Object getCellEditorValue() {
-//                return new Integer(nf.getText());
-//            }
-//        };
-//        TableColumn tc = new TableColumn(0, 64, fcr, etce);
-//        tc.setHeaderValue("コード");
-//        tcm.addColumn(tc);
-//        fcr = new FormulaCellRenderer(fm, this, SwingConstants.LEFT);
-//        etce = new EmptyTextCellEditor(new JTextField());
-//        tc = new TableColumn(1, 128, fcr, etce);
-//        tc.setHeaderValue("資材記号");
-//        tcm.addColumn(tc);
-//        fcr = new FormulaCellRenderer(fm, this, SwingConstants.RIGHT);
-//        fcr.setFractionDigits(3);
-//        final NumberField nf2 = new NumberField();
-//        nf2.setAllowDouble(true);
-//        etce = new EmptyTextCellEditor(nf2) {
-//            public Object getCellEditorValue() {
-//                return new Double(nf2.getText());
-//            }
-//        };
-//        tc = new TableColumn(2, 64, fcr, etce);
-//        tc.setHeaderValue("比率");
-//        tcm.addColumn(tc);
-//
-//        fTable = new JTable(null, tcm);
-//        fTable.setCellSelectionEnabled(true);
-//        fTable.setRowSelectionAllowed(false);
-//        fTable.setColumnSelectionAllowed(false);
-//        fTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//        fTable.setPreferredScrollableViewportSize(new Dimension(64, 192));
-//
-//        final JPopupMenu pm = initPopup();
-//        fTable.addMouseListener(new MouseAdapter() {
-//            public void mousePressed(MouseEvent e) {
-//                maybeShowPopup(e);
-//            }
-//
-//            public void mouseReleased(MouseEvent e) {
-//                maybeShowPopup(e);
-//            }
-//
-//            private void maybeShowPopup(MouseEvent e) {
-//                if (!fbvc.isEditing()) return;
-//                if (e.isPopupTrigger()) {
-//                    rowOnPopup = fTable.rowAtPoint(new Point(e.getX(), e.getY()));
-//                    pm.show(e.getComponent(), e.getX(), e.getY());
-//                }
-//            }
-//        });
+        TableColumnModel tcm = new DefaultTableColumnModel();
+        FormulaCellRenderer fcr = new FormulaCellRenderer(fbc, this, SwingConstants.CENTER);
+        final NumberField nf = new NumberField();
+        EmptyTextCellEditor etce = new EmptyTextCellEditor(nf) {
+            public Object getCellEditorValue() {
+                return new Integer(nf.getText());
+            }
+        };
+        TableColumn tc = new TableColumn(0, 64, fcr, etce);
+        tc.setHeaderValue("コード");
+        tcm.addColumn(tc);
+        fcr = new FormulaCellRenderer(fbc, this, SwingConstants.LEFT);
+        etce = new EmptyTextCellEditor(new JTextField());
+        tc = new TableColumn(1, 128, fcr, etce);
+        tc.setHeaderValue("資材記号");
+        tcm.addColumn(tc);
+        fcr = new FormulaCellRenderer(fbc, this, SwingConstants.RIGHT);
+        fcr.setFractionDigits(3);
+        final NumberField nf2 = new NumberField();
+        nf2.setAllowDouble(true);
+        etce = new EmptyTextCellEditor(nf2) {
+            public Object getCellEditorValue() {
+                return new Double(nf2.getText());
+            }
+        };
+        tc = new TableColumn(2, 64, fcr, etce);
+        tc.setHeaderValue("比率");
+        tcm.addColumn(tc);
+
+        fTable = new JTable(null, tcm);
+        fTable.setCellSelectionEnabled(true);
+        fTable.setRowSelectionAllowed(false);
+        fTable.setColumnSelectionAllowed(false);
+        fTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        fTable.setPreferredScrollableViewportSize(new Dimension(64, 192));
+
+        final JPopupMenu pm = initPopup();
+        fTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+
+            private void maybeShowPopup(MouseEvent e) {
+                if (!fbc.isEditing()) return;
+                if (e.isPopupTrigger()) {
+                    rowOnPopup = fTable.rowAtPoint(new Point(e.getX(), e.getY()));
+                    pm.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
     }
 
     /**

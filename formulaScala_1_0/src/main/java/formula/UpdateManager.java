@@ -1,4 +1,4 @@
-package formula;
+package formula.java;
 
 import java.io.*;
 import java.util.*;

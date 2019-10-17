@@ -11,15 +11,15 @@ import javax.swing.table.*;
  * setValue()メソッドを適切にオーバーライドする
  */
 public class FormulaCellRenderer extends DefaultTableCellRenderer {
-  private IFormulaModel fm;
+  private FBrowseC fbc;
   private FBrowseView fbv;
   private NumberFormat nf = NumberFormat.getInstance();
   /**
    * FormulaCellRenderer コンストラクター・コメント。
    */
-  public FormulaCellRenderer(IFormulaModel fm, FBrowseView fbv, int horizontalAlignment) {
+  public FormulaCellRenderer(FBrowseC fbc, FBrowseView fbv, int horizontalAlignment) {
     super();
-    this.fm = fm;
+    this.fbc = fbc;
     this.fbv = fbv;
     setHorizontalAlignment(horizontalAlignment);
   }
@@ -35,7 +35,7 @@ public class FormulaCellRenderer extends DefaultTableCellRenderer {
    */
   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
     Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    int status = (fbv.getDispMode()) ? fm.getNormMatStatus(row) : fm.getDecompMatStatus(row);
+    int status = (fbv.getDispMode()) ? fbc.getNormMatStatus(row) : fbc.getDecompMatStatus(row);
     switch (status) {
     case 0:
       c.setForeground(Color.black);
