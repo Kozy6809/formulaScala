@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import dap.*;
 import formula.ui.*;
@@ -323,7 +323,6 @@ public class FBrowseViewC implements IConsts, IWinControl {
    * 処方がリンクされた時の更新を実行する。別処方のデータをコピーして更新する
    * このメソッドはバックグランドで実行される必要がある
    * 更新に失敗した場合はfalseを返す
-   * @param master formula.AbstractFormulaModel
    */
   public boolean linkFormula(int transactionID) {
     boolean rc = fm.chainUpdate(transactionID);
@@ -422,7 +421,6 @@ public class FBrowseViewC implements IConsts, IWinControl {
   /**
    * orgで指定された資材コードが処方に含まれているなら、それをaltに変更し、
    * 更新者をauthPerson、理由をreasonにし、編集状態にする
-   * @param ae doubl
    */
   public void setMcode(int org, int alt, String authPerson, String reason) {
     for (int i=0, n=fm.getNormDataSize(); i < n; i++) {

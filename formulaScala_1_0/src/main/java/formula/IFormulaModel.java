@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import java.util.*;
 import dap.*;
@@ -9,8 +9,6 @@ $Id: IFormulaModel.java,v 1.1 2008/10/17 01:15:40 wakui Exp $
 public interface IFormulaModel {
   /**
    * 処方の更新を実行するが、コミットを行わない。処方リンクで複数処方を同時に更新する時に使用
-   * @param client dap.IQueryClient
-   * @param mode int
    */
   public boolean chainUpdate(int transactionID);
   /**
@@ -89,7 +87,6 @@ public interface IFormulaModel {
   public Object getDecompValueAt(int row, int column);
   /**
    * 通常処方の値を取得する。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public Vector getNormData();
   /**
@@ -236,7 +233,6 @@ public interface IFormulaModel {
   public void setNormData(Vector data);
   /**
    * 製造コードをセットする。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public void setPcode(int pcode);
   /**

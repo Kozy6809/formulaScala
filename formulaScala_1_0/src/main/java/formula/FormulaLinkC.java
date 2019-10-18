@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import java.util.*;
 import java.awt.datatransfer.*;
@@ -349,7 +349,6 @@ public class FormulaLinkC implements IQueryClient, IConsts, IWinControl {
    * リンクへの追加に伴う処方の更新を指示する。pcodeで指定される処方がgroupに追加され、
    * isMasterが真ならgroupがpcodeの処方に揃い、偽ならpcodeがgroupの処方に揃う
    * @param group javax.swing.tree.FLTreeNode
-   * @param master javax.swing.tree.FLTreeNode
    */
   private void transact(FLTreeNode group, Object[] item, boolean isMaster) {
     if (flm.isExist(((Integer)item[1]).intValue())) {
@@ -434,7 +433,6 @@ public class FormulaLinkC implements IQueryClient, IConsts, IWinControl {
    * 全ての更新に成功したらtrue、さもなくばfalseを返す
    * isMasterが真ならgroupがpcodeの処方に揃い、偽ならpcodeがgroupの処方に揃う
    * 更新に失敗した場合、ロールバック処理はFormulaModelの中で行われる
-   * @param group javax.swing.tree.FLTreeNode
    * @param master javax.swing.tree.FLTreeNode
    */
   private boolean updateFormula(int tID, final Object[][] master, Object[][] slave) {
@@ -470,7 +468,6 @@ public class FormulaLinkC implements IQueryClient, IConsts, IWinControl {
   }
   /**
    * 外部のオブジェクトに依頼した更新処理を通知してもらうメソッド
-   * @param pcode int
    */
   public void updateResult(Object updateSrc, boolean updateFailed) {
     this.updateSrc = updateSrc;

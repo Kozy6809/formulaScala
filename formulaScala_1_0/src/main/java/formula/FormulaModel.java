@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import dap.*;
 import java.util.*;
@@ -73,8 +73,6 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
    * エラー時のロールバックはここで実行する
    * トランザクションIDにtIDを使用する
    * このメソッドはバックグランドで実行される必要がある
-   * @param client dap.IQueryClient
-   * @param mode int
    */
   public boolean chainUpdate(int tID) {
     if (!chkReady()) return false;
@@ -367,7 +365,6 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 通常処方の値を取得する。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public Vector getNormData() {
     return normData;
@@ -721,7 +718,6 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 製造コードをセットする。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public void setPcode(int pcode) {
     this.pcode = pcode;

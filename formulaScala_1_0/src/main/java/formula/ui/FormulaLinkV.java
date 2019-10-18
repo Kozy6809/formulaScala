@@ -1,4 +1,4 @@
-package formula.ui.java;
+package formula.ui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,7 +29,6 @@ public class FormulaLinkV extends JFrame {
   }
   /**
    * 指定された行が表示され、選択状態になるようにする
-   * @param row int
    */
   public void addSelectionPath(TreePath path) {
     tree.addSelectionPath(path);
@@ -94,7 +93,6 @@ public class FormulaLinkV extends JFrame {
   }
   /**
    * 指定された行が表示されるようにする
-   * @param row int
    */
   public void makePathVisible(TreePath path) {
     tree.scrollPathToVisible(path);
@@ -108,7 +106,6 @@ public class FormulaLinkV extends JFrame {
   }
   /**
    * JTreeにTreeModelをセットする
-   * @param root TreeNode
    */
   public void setNodes(TreeModel tm) {
     tree.setModel(tm);

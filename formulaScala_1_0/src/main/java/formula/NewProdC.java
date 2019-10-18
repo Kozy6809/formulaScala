@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import java.util.*;
 import java.sql.SQLException;

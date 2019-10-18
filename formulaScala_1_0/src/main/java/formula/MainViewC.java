@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,8 +42,8 @@ public class MainViewC implements IQueryClient, IConsts, MatDeterminListener {
 
   private Vector resultData = null;
   private boolean resultProd = true;
-  private class ResultListModel extends AbstractListModel<Object> {
-    public Object getElementAt(int index) {
+  private class ResultListModel extends AbstractListModel<String> {
+    public String getElementAt(int index) {
       if (resultData == null) return null;
       if (resultData.size() == 0) return "該当なし";
       Object[] o = SQLutil.getRow(resultData, index);
@@ -134,7 +134,6 @@ public class MainViewC implements IQueryClient, IConsts, MatDeterminListener {
    * 製品による検索結果をフォーマットしてクリップボードにコピーする
    * 検索結果はpcode, series, name, obsoleteの順で格納されており、
    * これをpcode, series, name, obsoleteの順に並べる
-   * @param o java.lang.Object[]
    */
   private void copyResultProd(Vector v) {
     StringBuffer sb = new StringBuffer();
@@ -418,8 +417,6 @@ public class MainViewC implements IQueryClient, IConsts, MatDeterminListener {
   }
   /**
    * コード指定による検索を実行する。seriesのサイズが0の場合、全品種からの検索を行う
-   * @param codeText java.lang.String
-   * @param mode int
    */
   public void searchByCode(Object[] series, int code, int mode) {
     if (mode == 0) { // 製品で検索
@@ -433,8 +430,6 @@ public class MainViewC implements IQueryClient, IConsts, MatDeterminListener {
   /**
    * 名前指定による検索を実行する。seriesのサイズが0の場合、全品種からの検索を行う
    * 原料名から検索する時は原料名から原料コードを調べ、正しいコードが得られれば検索を行う
-   * @param codeText java.lang.String
-   * @param mode int
    */
   public void searchByName(Object[] series, String name, int mode) {
     if (mode == 0) { // 製品で検索

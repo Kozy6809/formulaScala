@@ -11,7 +11,7 @@ import javax.swing.*;
  */
 public class AuthenticationDialog extends JDialog {
     private JFrame parent;
-    private JList candidates = null;
+    private JList<String> candidates = null;
     private boolean canceled = true;
 
     public AuthenticationDialog(JFrame parent, String[] names) {
@@ -19,6 +19,10 @@ public class AuthenticationDialog extends JDialog {
         this.parent = parent;
         candidates = new JList(names);
         init();
+    }
+
+    public AuthenticationDialog(Frame parent, boolean b) {
+        super(parent, b);
     }
 
 
@@ -55,4 +59,11 @@ public class AuthenticationDialog extends JDialog {
         return (String)candidates.getSelectedValue();
     }
 
+    public JList<String> getList() {
+        return candidates;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
 }

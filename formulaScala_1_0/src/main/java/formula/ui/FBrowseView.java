@@ -25,16 +25,14 @@ public class FBrowseView extends JFrame {
     private JLabel poison = new JLabel("");
     private int rowOnPopup = 0; // テーブルでポップアップメニューが表示された時の行位置
 
-    /**
-     * FBrowseView コンストラクター・コメント。
-     *
-     * @param arg1 java.lang.String
-     */
     public FBrowseView(FBrowseC fbvc, String title) {
         super(title);
         this.fbc = fbvc;
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         init();
+    }
+
+    public FBrowseView(FBrowseViewC fBrowseViewC, String title) {
     }
 
     /**

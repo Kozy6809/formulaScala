@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import dap.*;
 import formula.ui.*;
@@ -15,8 +15,8 @@ public class Authenticator {
   private Vector authPerson = null;
   private String selectedPerson = null;
   private AuthenticationDialog ad = null;
-  private class APListModel extends AbstractListModel<Object> {
-    public Object getElementAt(int index) {
+  private class APListModel extends AbstractListModel<String> {
+    public String getElementAt(int index) {
       if (authPerson == null) return null;
       return (String)SQLutil.get(authPerson, index, 0);
     }

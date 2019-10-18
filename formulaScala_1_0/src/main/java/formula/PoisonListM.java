@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import dap.*;
 import java.util.*;

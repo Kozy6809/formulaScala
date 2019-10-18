@@ -1,4 +1,4 @@
-package formula.ui.java;
+package formula.ui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,19 +21,13 @@ public class NewLinkDlg extends JDialog {
   private JLabel personLabel = new JLabel("登録者：");
   private boolean thisIsMaster = false; // 追加する処方に既存処方を合わせていくならtrue
   private boolean canceled = false;
-  /**
-   * NewLinkDlg コンストラクター・コメント。
-   * @param arg1 java.awt.Frame
-   */
+
   public NewLinkDlg(Frame f) {
     super(f, "処方リンクに追加", true);
     //	this.flm = flm;
     init();
   }
-  /**
-   * NewLinkDlg コンストラクター・コメント。
-   * @param arg1 java.awt.Frame
-   */
+
   public NewLinkDlg(Frame f, FormulaLinkC flc) {
     super(f, "処方リンクに追加", true);
     this.flc = flc;

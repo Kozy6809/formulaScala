@@ -1,4 +1,4 @@
-package formula.ui.java;
+package formula.ui;
 
 import formula.*;
 import java.util.*;
@@ -12,10 +12,7 @@ import javax.swing.table.*;
 public class HistoryListView extends JFrame {
   private HistoryListC hlc;
   private JTable table = null;
-  /**
-   * HistoryListView コンストラクター・コメント。
-   * @param arg1 java.lang.String
-   */
+
   public HistoryListView(HistoryListC hlc, String title) {
     super(title + "のあゆみ");
     this.hlc = hlc;

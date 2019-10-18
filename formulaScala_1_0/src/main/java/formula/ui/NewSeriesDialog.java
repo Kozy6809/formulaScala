@@ -1,4 +1,4 @@
-package formula.ui.java;
+package formula.ui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,10 +10,7 @@ import formula.*;
 public class NewSeriesDialog extends JDialog {
   private NewProdView npv;
   private JTextField newSeries = new JTextField(16);
-  /**
-   * NewSeriesDialog コンストラクター・コメント。
-   * @param arg1 java.awt.Frame
-   */
+
   public NewSeriesDialog(NewProdView npv) {
     super(npv, "", true);
     this.npv = npv;

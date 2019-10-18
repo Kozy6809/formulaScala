@@ -1,4 +1,4 @@
-package formula.java;
+package formula;
 
 import dap.*;
 import java.util.*;
@@ -38,8 +38,6 @@ public class ArcModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 処方の更新を実行するが、コミットを行わない。処方リンクで複数処方を同時に更新する時に使用
-   * @param client dap.IQueryClient
-   * @param mode int
    */
   public boolean chainUpdate(int transactionID) {
     return false;
@@ -270,7 +268,6 @@ public class ArcModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 通常処方の値を取得する。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public Vector getNormData() {
     return normData;
@@ -550,7 +547,6 @@ public class ArcModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 製造コードをセットする。これは処方リンク時のコピー用
-   * @param data java.util.Vector
    */
   public void setPcode(int pcode) {
     this.pcode = pcode;

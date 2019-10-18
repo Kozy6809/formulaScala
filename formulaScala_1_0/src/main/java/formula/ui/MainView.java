@@ -44,6 +44,9 @@ public class MainView extends JFrame {
         else setSize(w, h);
     }
 
+    public MainView(MainViewC mainViewC) {
+    }
+
     /**
      * クローズ時にウィンドウのステータスを保存する。現在はウィンドウサイズのみ
      */
