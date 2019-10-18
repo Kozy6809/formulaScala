@@ -6,11 +6,10 @@
     <class>formula.Fmaster</class>
     <class>formula.Pmaster</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=holbeinm;integratedSecurity=false;user=formulaApp;password=formulaApp"/>
-      <property name="javax.persistence.jdbc.password" value="formulaApp"/>
-      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.user" value="formulaApp"/>
-    </properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:holbeinm"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+      <property name="javax.persistence.jdbc.user" value=""/>    </properties>
   </persistence-unit>
   <persistence-unit name="formulaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
@@ -26,10 +25,10 @@
     <class>formula.ToxIx</class>
     <class>formula.ToxMcode</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost;databaseName=formula;integratedSecurity=false;user=formulaApp;password=formulaApp"/>
-      <property name="javax.persistence.jdbc.password" value="formulaApp"/>
-      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.user" value="formulaApp"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:odbc:formula"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
     </properties>
   </persistence-unit>
 </persistence>
