@@ -19,7 +19,7 @@ public class Main implements IGlobalErrorHandler {
   private static Connections cons = null;
   private QueryManager qm = null;
   private MainC mvc = null;
-  private static Vector wins = new Vector(); // ウィンドウコントローラのリスト
+  private static Vector<IWinControl> wins = new Vector<>(); // ウィンドウコントローラのリスト
 
   /**
    * Formula2 コンストラクター・コメント。
@@ -38,7 +38,7 @@ public class Main implements IGlobalErrorHandler {
    * ウィンドウコントローラを登録する
    * @param wc myutil.IWinControl
    */
-  public static void addWin(IWinControl wc) {
+  static void addWin(IWinControl wc) {
     wins.addElement(wc);
   }
   /**
@@ -54,10 +54,12 @@ public class Main implements IGlobalErrorHandler {
    * プログラムを終了する。QueryManagerが終了するのを待ち、
    * 次いでConnectionをcloseする
    */
-  public void exit() {
+  void exit() {
     try {
       qm.quitAndWait();
-    } catch (java.sql.SQLException e) {}
+    } catch (java.sql.SQLException e) {
+      System.out.println(e.getMessage());
+    }
     cons.closeConnection("formula");
     System.exit(0);
   }
@@ -71,17 +73,15 @@ public class Main implements IGlobalErrorHandler {
    */
   public void globalError(Object source, Throwable t) {
     try {
-      SwingUtilities.invokeAndWait(new Runnable() {
-        public void run() {
-          JOptionPane.showMessageDialog(mvc.getMV(),
-                  "データベースとの接続が失われました　\n" +
-                          "プログラムを終了します　\n\n" +
-                          "更新途中のデータは全て失われます　",
-                  "重大なエラー",
-                  JOptionPane.ERROR_MESSAGE);
-        }
-      });
-    } catch (Exception e) {}
+      SwingUtilities.invokeAndWait(() -> JOptionPane.showMessageDialog(mvc.getMV(),
+              "データベースとの接続が失われました　\n" +
+                      "プログラムを終了します　\n\n" +
+                      "更新途中のデータは全て失われます　",
+              "重大なエラー",
+              JOptionPane.ERROR_MESSAGE));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
     System.exit(1);
   }
 
@@ -111,8 +111,8 @@ public class Main implements IGlobalErrorHandler {
     boolean direct = false;
 
     String host = "127.0.0.1";
-//    String db = "jdbc:odbc:formula";
-    String db = "jdbc:sqlserver://localhost\\SQLEXPRESS;database=formula;integratedSecurity=true;";
+    String db = "jdbc:odbc:formula";
+//    String db = "jdbc:sqlserver://localhost\\SQLEXPRESS;database=formula;integratedSecurity=true;";
     String user = "formula";
     String password = "formula";
     String charConversion = "";
@@ -130,13 +130,13 @@ public class Main implements IGlobalErrorHandler {
         break;
       case 1:
         direct = true;
-        if (args[0].indexOf((int)':') < 0) {
+        if (args[0].indexOf(':') < 0) {
           db = "jdbc:odbc:" + args[0];
         } else db = args[0];
         break;
       case 2:
         host = args[0];
-        if (args[1].indexOf((int)':') < 0) {
+        if (args[1].indexOf(':') < 0) {
           db = "jdbc:odbc:" + args[1];
         } else db = args[1];
         break;
@@ -145,14 +145,14 @@ public class Main implements IGlobalErrorHandler {
 
     cons = new Connections();
     if (direct) {
-      if (cons.createDirectConnection
-              (db, user, password, dbName, charConversion) == false) {
+      if (!cons.createDirectConnection
+              (db, user, password, dbName, charConversion)) {
         connectFailed();
         return;
       }
     } else {
-      if (cons.createConnection
-              (host, db, user, password, dbName, charConversion) == false) {
+      if (!cons.createConnection
+              (host, db, user, password, dbName, charConversion)) {
         connectFailed();
         return;
       }
@@ -165,7 +165,7 @@ public class Main implements IGlobalErrorHandler {
    * ウィンドウコントローラを削除する
    * @param wc myutil.IWinControl
    */
-  public static void removeWin(IWinControl wc) {
+  static void removeWin(IWinControl wc) {
     wins.removeElement(wc);
   }
   /**
@@ -173,7 +173,7 @@ public class Main implements IGlobalErrorHandler {
    * 全てのコントローラがリクエストを受付ければtrue、さもなくばfalseを返す
    * @return boolean
    */
-  public boolean requestClose() {
+  boolean requestClose() {
     boolean allDone = true;
     // winsの要素は動的に変化するため、静的なコピーを使用する
     Vector winsF = (Vector)wins.clone();

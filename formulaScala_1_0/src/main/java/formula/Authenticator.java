@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * 処方更新権限の認証を行う
  */
-public class Authenticator {
+class Authenticator {
   private QueryManager qm;
   private Frame parent;
   private static Query getAuthPerson = null;
@@ -27,39 +27,37 @@ public class Authenticator {
       super.fireContentsChanged(source, index0, index1);
     }
   }
-  APListModel aplm = new APListModel();
+  private APListModel aplm = new APListModel();
   /**
    * Authenticator コンストラクター・コメント。
    */
-  public Authenticator(QueryManager qm) {
+  Authenticator(QueryManager qm) {
     super();
     this.qm = qm;
     getAuthPerson = new Query(qm, "select person from authorize order by kana");
-    getAuthPerson.query(new IQueryClient() {
-      public void queryCallBack(Object o, int mode) {
-	if (mode == IConsts.SQLERROR) return;
-	authPerson = (Vector)o;
-	aplm.fireContentsChanged(aplm, 0, authPerson.size());
-      }
+    getAuthPerson.query((o, mode) -> {
+  if (mode == IConsts.SQLERROR) return;
+  authPerson = (Vector)o;
+  aplm.fireContentsChanged(aplm, 0, authPerson.size());
     }, 0);
   }
   /**
    * 認証を実行する。ダイアログがキャンセルされればfalse、さもなくばtrueを返す
    * @return boolean
    */
-  public boolean  authorize(Frame parent) {
+  boolean  authorize(Frame parent) {
     ad = new AuthenticationDialog(parent, true);
     ad.getList().setModel(aplm);
     ad.pack();
     ad.setLocationRelativeTo(parent);
     ad.setVisible(true);
-    if (!ad.isCanceled()) selectedPerson = (String)ad.getList().getSelectedValue();
-    return !ad.isCanceled();
+    if (ad.isNotCanceled()) selectedPerson = ad.getList().getSelectedValue();
+    return ad.isNotCanceled();
   }
   /**
    * @return java.lang.String
    */
-  public String getResult() {
+  String getResult() {
     return selectedPerson;
   }
 }

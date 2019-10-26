@@ -22,7 +22,11 @@ public class ConfRegV extends JFrame {
     this.tm = tm;
     init();
   }
-  /**
+
+    public ConfRegV(ConfRegC confRegC, AbstractTableModel crtm) {
+    }
+
+    /**
    */
   private void init() {
     Container cp = getContentPane();
@@ -34,20 +38,14 @@ public class ConfRegV extends JFrame {
     mb.add(m);
     JMenuItem mi = new JMenuItem("クリップボードへコピー(C)");
     mi.setMnemonic('C');
-    mi.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-	crc.copyToClip();
-      }
-    });
+    mi.addActionListener(e -> crc.copyToClip());
     m.add(mi);
     m = new JMenu("表示(V)");
     m.setMnemonic('V');
     mb.add(m);
     mi = new JMenuItem("最新表示に更新(U)");
     mi.setMnemonic('U');
-    mi.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-      }
+    mi.addActionListener(e -> {
     });
     m.add(mi);
 
@@ -60,19 +58,11 @@ public class ConfRegV extends JFrame {
     p0.add(p1, BorderLayout.SOUTH);
     JButton b = new JButton("更新(U)");
     b.setMnemonic('U');
-    b.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-	crc.update();
-      }
-    });
+    b.addActionListener(e -> crc.update());
     p1.add(b);
     b = new JButton("キャンセル(C)");
     b.setMnemonic('C');
-    b.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-	crc.close();
-      }
-    });
+    b.addActionListener(e -> crc.close());
     p1.add(b);
 
     addWindowListener(new WindowAdapter() {

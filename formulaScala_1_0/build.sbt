@@ -5,9 +5,10 @@ lazy val root = (project in file(".")).settings(
   mainClass := Some("formula.MainScala"),
 
   libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-    "org.eclipse.persistence" % "javax.persistence" % "2.2.0",
-    "org.eclipse.persistence" % "eclipselink" % "2.6.4",
+    "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+    "org.playframework.anorm" %% "anorm" % "2.6.5",
+    "org.eclipse.persistence" % "javax.persistence" % "2.1.0",
+    "org.eclipse.persistence" % "eclipselink" % "2.5.1",
     "org.scala-lang.modules" %% "scala-swing" % "2.0.0",
     "com.microsoft.sqlserver" % "mssql-jdbc" % "6.4.0.jre8"
   )

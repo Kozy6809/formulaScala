@@ -1,9 +1,6 @@
 package formula.ui;
 
-import formula.*;
-
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -14,10 +11,11 @@ public class AuthenticationDialog extends JDialog {
     private JList<String> candidates = null;
     private boolean canceled = true;
 
+
     public AuthenticationDialog(JFrame parent, String[] names) {
         super(parent, true);
         this.parent = parent;
-        candidates = new JList(names);
+        candidates = new JList<>(names);
         init();
     }
 
@@ -56,14 +54,14 @@ public class AuthenticationDialog extends JDialog {
 
     public String selectedPerson() {
         if (canceled) return null;
-        return (String)candidates.getSelectedValue();
+        return candidates.getSelectedValue();
     }
 
     public JList<String> getList() {
         return candidates;
     }
 
-    public boolean isCanceled() {
-        return canceled;
+    public boolean isNotCanceled() {
+        return !canceled;
     }
 }
