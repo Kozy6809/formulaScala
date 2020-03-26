@@ -73,6 +73,8 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
    * エラー時のロールバックはここで実行する
    * トランザクションIDにtIDを使用する
    * このメソッドはバックグランドで実行される必要がある
+   * @param client dap.IQueryClient
+   * @param mode int
    */
   public boolean chainUpdate(int tID) {
     if (!chkReady()) return false;
@@ -365,6 +367,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 通常処方の値を取得する。これは処方リンク時のコピー用
+   * @param data java.util.Vector
    */
   public Vector getNormData() {
     return normData;
@@ -718,6 +721,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
   }
   /**
    * 製造コードをセットする。これは処方リンク時のコピー用
+   * @param data java.util.Vector
    */
   public void setPcode(int pcode) {
     this.pcode = pcode;
@@ -872,7 +876,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
       if (System.getProperty("postgre") == null) o = "order";
       else o = "order_";
       insArc1 = new PUpdate
-	(qm, "insert into arc1 select pcode, date, " + o + ", mcode, percent " +
+	(qm, "insert into arc1 select pcode, date, " + o + ", mcode, percent, op_ing " +
 	 "from form1 where pcode = ?", INtypes);
       insArc1.prepare();
     }
@@ -907,7 +911,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
       INtypes[2] = INT;
       INtypes[3] = INT;
       INtypes[4] = FLOAT;
-      setForm1 = new PUpdate(qm, "insert into form1 values(?, ?, ?, ?, ?)", INtypes);
+      setForm1 = new PUpdate(qm, "insert into form1 values(?, ?, ?, ?, ?, null)", INtypes);
       setForm1.prepare();
     }
 

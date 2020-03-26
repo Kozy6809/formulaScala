@@ -37,7 +37,7 @@ public class PrintPreview extends JFrame {
       if (printPrp != null) {
 	try {
 	  FileOutputStream fos = new FileOutputStream("print.prp");
-	  printPrp.store(fos, "print property");
+	  printPrp.save(fos, "print property");
 	  fos.close();
 	} catch (IOException e) {e.printStackTrace();}	
       }	
@@ -47,7 +47,7 @@ public class PrintPreview extends JFrame {
       pc.setResolution(pjob.getPageResolution());
       Graphics pg = pjob.getGraphics();
       if (pg != null) {
-	pc.printAll(pg);
+
 	pg.dispose(); // flush page
       }
       pjob.end();
