@@ -12,6 +12,7 @@ import formula.*;
  */
 public class FBrowseView extends JFrame {
   private FBrowseViewC fbvc;
+  private FBrowseC fbc;
   private JLabel lDate = new JLabel("date");
   private JLabel lPerson = new JLabel("person");
   private NumberField tSG = new NumberField("0");
@@ -23,6 +24,10 @@ public class FBrowseView extends JFrame {
   private JRadioButtonMenuItem miShowNorm = null;
   private JLabel poison = new JLabel("");
   private int rowOnPopup = 0; // テーブルでポップアップメニューが表示された時の行位置
+  public FBrowseView(FBrowseC fbc, String title) {
+    super(title);
+    this.fbc = fbc;
+  }
   /**
    * FBrowseView コンストラクター・コメント。
    * @param arg1 java.lang.String
@@ -309,7 +314,7 @@ public class FBrowseView extends JFrame {
   private void initTable() {
     IFormulaModel fm = fbvc.getFM();
     TableColumnModel tcm = new DefaultTableColumnModel();
-    FormulaCellRenderer fcr = new FormulaCellRenderer(fm, this, SwingConstants.CENTER);
+    FormulaCellRenderer fcr = new FormulaCellRenderer(fbc, this, SwingConstants.CENTER);
     final NumberField nf = new NumberField();
     EmptyTextCellEditor etce = new EmptyTextCellEditor(nf) {
       public Object getCellEditorValue() {
@@ -319,12 +324,12 @@ public class FBrowseView extends JFrame {
     TableColumn tc = new TableColumn(0, 64, fcr, etce);
     tc.setHeaderValue("コード");
     tcm.addColumn(tc);
-    fcr = new FormulaCellRenderer(fm, this, SwingConstants.LEFT);
+    fcr = new FormulaCellRenderer(fbc, this, SwingConstants.LEFT);
     etce = new EmptyTextCellEditor(new JTextField());
     tc = new TableColumn(1, 128, fcr, etce);
     tc.setHeaderValue("資材記号");
     tcm.addColumn(tc);
-    fcr = new FormulaCellRenderer(fm, this, SwingConstants.RIGHT);
+    fcr = new FormulaCellRenderer(fbc, this, SwingConstants.RIGHT);
     fcr.setFractionDigits(3);
     final NumberField nf2 = new NumberField();
     nf2.setAllowDouble(true);
