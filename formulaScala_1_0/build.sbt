@@ -6,6 +6,7 @@ lazy val root = (project in file(".")).settings(
 
   libraryDependencies ++= Seq(
     "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+    "com.typesafe.play" %% "play-jdbc" % "2.8.1",
     "org.playframework.anorm" %% "anorm" % "2.6.5",
     "org.eclipse.persistence" % "javax.persistence" % "2.1.0",
     "org.eclipse.persistence" % "eclipselink" % "2.5.1",
