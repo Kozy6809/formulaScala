@@ -5,7 +5,7 @@ import java.sql.{Connection, DriverManager}
 object AnormTest {
   import anorm._
   import anorm.SqlParser._
-  import play.api.db._
+  import FormulaDatabase.connection
 
   case class PcodeRow(obsolete: Int, pcode: Int, series: String, name: String)
   private val parser = int("obsolete") ~ int("pcode") ~
@@ -14,8 +14,6 @@ object AnormTest {
   }
   def main(args: Array[String]): Unit =
   {
-    println(Class.forName("sun.jdbc.odbc.JdbcOdbcDriver"))
-    implicit val con: Connection = DriverManager.getConnection("jdbc:odbc:formula")
 
     val result = SQL("Select series, name, obsolete, pcode from pcode where pcode between 500000 and 500100").
       as(parser.*)
