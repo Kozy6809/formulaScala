@@ -876,7 +876,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
       if (System.getProperty("postgre") == null) o = "order";
       else o = "order_";
       insArc1 = new PUpdate
-	(qm, "insert into arc1 select pcode, date, " + o + ", mcode, percent " +
+	(qm, "insert into arc1 select pcode, date, " + o + ", mcode, percent, op_ing " +
 	 "from form1 where pcode = ?", INtypes);
       insArc1.prepare();
     }
@@ -911,7 +911,7 @@ public class FormulaModel implements IFormulaModel, IQueryClient, IConsts {
       INtypes[2] = INT;
       INtypes[3] = INT;
       INtypes[4] = FLOAT;
-      setForm1 = new PUpdate(qm, "insert into form1 values(?, ?, ?, ?, ?)", INtypes);
+      setForm1 = new PUpdate(qm, "insert into form1 values(?, ?, ?, ?, ?, null)", INtypes);
       setForm1.prepare();
     }
 

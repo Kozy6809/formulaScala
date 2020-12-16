@@ -47,7 +47,7 @@ public class PrintPreview extends JFrame {
       pc.setResolution(pjob.getPageResolution());
       Graphics pg = pjob.getGraphics();
       if (pg != null) {
-	pc.printAll(pg);
+
 	pg.dispose(); // flush page
       }
       pjob.end();

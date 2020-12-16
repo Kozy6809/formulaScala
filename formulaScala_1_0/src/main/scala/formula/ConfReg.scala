@@ -26,7 +26,9 @@ class ConfReg {
                     "new formula.ConfRegData(f.date,f.pcode,p.series,p.name,a.person,a.id) " +
                     "from Form2 f, Pcode p, Authorize a " +
                     "where f.pcode = p.pcode and f.person = a.person " +
-                    "and f.confDate is NULL order by f.date", classOf[ConfRegData])
+                    "and f.confDate is NULL", classOf[ConfRegData])
+//                    "and f.confDate is NULL order by f.date", classOf[ConfRegData])
+                    
   private val data = q.getResultList
     
   private class CRTableModel extends AbstractTableModel {

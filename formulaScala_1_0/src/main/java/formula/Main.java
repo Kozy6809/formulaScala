@@ -18,7 +18,7 @@ public class Main implements IGlobalErrorHandler {
   private static final String dbName = "formula";
   private static Connections cons = null;
   private QueryManager qm = null;
-  private MainViewC mvc = null;
+  private MainC mc = null;
   private static Vector wins = new Vector(); // ウィンドウコントローラのリスト
   
   /**
@@ -73,7 +73,7 @@ public class Main implements IGlobalErrorHandler {
     try {
       SwingUtilities.invokeAndWait(new Runnable() {
 	public void run() {
-	  JOptionPane.showMessageDialog(mvc.getMV(),
+	  JOptionPane.showMessageDialog(mc.getMV(),
 					"データベースとの接続が失われました　\n" +
 					"プログラムを終了します　\n\n" +
 					"更新途中のデータは全て失われます　",
@@ -89,7 +89,7 @@ public class Main implements IGlobalErrorHandler {
    */
   private void go() {
     qm.setGEH(this);
-    mvc = new MainViewC(this, qm);
+    mc = new MainC();
     sp.setVisible(false);
     String[] s = null;
   }
@@ -189,7 +189,6 @@ public class Main implements IGlobalErrorHandler {
     return allDone;
   }
 }
-
 /*
 $Id: Main.java,v 1.1 2008/10/17 01:15:40 wakui Exp $
 */

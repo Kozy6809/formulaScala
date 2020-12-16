@@ -8,7 +8,7 @@ import java.awt.*;
  * @author: 
  */
 public class Splash extends Frame {
-  private static String updates = "2011/10/7 印刷時に長い資材名を2行に分けるようにしました";
+  private static String updates = "2020/3/26 処方連絡書にラベル仕様変更のチェック欄を追加しました";
 
   /**
    * Splash コンストラクター・コメント。
@@ -38,7 +38,7 @@ public class Splash extends Frame {
     l.setAlignment(Label.CENTER);
     l.setFont(new Font("dialog", 0, 18));
     add(l, "Center");
-    setSize(520, 330);
+    setSize(570, 330);
     setTitle("処方データベースを起動しています");
   }
 }

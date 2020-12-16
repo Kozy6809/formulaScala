@@ -27,7 +27,7 @@ public class FBrowseView extends JFrame {
    * FBrowseView コンストラクター・コメント。
    * @param arg1 java.lang.String
    */
-  public FBrowseView(FBrowseViewC fbvc, String title) {
+  public FBrowseView(FBrowseC fbvc, String title) {
     super(title);
     this.fbvc = fbvc;
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -198,7 +198,7 @@ public class FBrowseView extends JFrame {
     mi.setMnemonic('P');
     mi.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-	fbvc.print(miShowNorm.isSelected());
+	fbvc.print2(miShowNorm.isSelected());
       }
     });
     m.add(mi);

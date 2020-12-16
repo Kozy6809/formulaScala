@@ -13,7 +13,7 @@ import javax.persistence._
 final class Form2 {
   @Id
   var pcode:Int =_
-  var date :java.sql.Timestamp =_
+  var date:java.sql.Timestamp =_
   var sg:Float =_
   var person:String =_
   var comment:String =_
