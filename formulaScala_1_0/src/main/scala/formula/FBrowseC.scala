@@ -1,6 +1,6 @@
 package formula
 import collection.JavaConversions._
-import formula.ui.FBrowseView
+import formula.ui.FBrowseV
 import javax.swing.table.AbstractTableModel
 import java.text.NumberFormat
 import javax.swing.JOptionPane
@@ -17,8 +17,9 @@ class FBrowseC(private val p: Pcode) extends MatDetermin {
   private var rfv = resolvfToFormView(r)
   private var showingfv = ffv
   private var editing = false
-  private val fbv = new FBrowseView(this, p.pcode + " " + p.series + " " + p.name)
+  private val fbv = new FBrowseV(this, p.pcode + " " + p.series + " " + p.name)
   protected val f = fbv
+
   fbv.setForm2Data(form2)
   showNorm
   fbv.pack()
@@ -28,11 +29,14 @@ class FBrowseC(private val p: Pcode) extends MatDetermin {
    * 処方表示テーブル用のデータ型
    */
   private class FormView(var mcode: Int, var m: Mcode, var percent: Float)
+
   private def form1ToFormView(l: List[Form1]): List[FormView] =
     l.map(f => new FormView(f.mcode, determinByMcode(f.mcode).get, f.percent))
+
   private def resolvfToFormView(l: List[Resolvf]): List[FormView] =
     l.map(r => new FormView(r.pk.mcode, determinByMcode(r.pk.mcode).get, r.percent))
-  private class FormTableModel(private val l: List[FormView], private val editable: Boolean)
+
+  class FormTableModel(private val l: List[FormView], private val editable: Boolean)
     extends AbstractTableModel {
     def getRowCount = l.size
     def getColumnCount = 3

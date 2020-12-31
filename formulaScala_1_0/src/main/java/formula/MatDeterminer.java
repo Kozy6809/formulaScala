@@ -16,8 +16,8 @@ public class MatDeterminer implements IQueryClient, IConsts {
   private MaterialResolver mr;
 
   private Vector resultData = null;
-  private class ResultListModel extends AbstractListModel<Object> {
-    public Object getElementAt(int index) {
+  private class ResultListModel extends AbstractListModel<String> {
+    public String getElementAt(int index) {
       if (resultData == null) return null;
       String mcode = ((Integer)SQLutil.get(resultData, index, 0)).toString();
       String mname = (String)SQLutil.get(resultData, index, 1);
@@ -48,7 +48,7 @@ public class MatDeterminer implements IQueryClient, IConsts {
   private MatDeterminDialog getMdd() {
     if (mdd == null) {
       try {
-	mdd = new MatDeterminDialog(parent, "複数の候補があります", true);
+	mdd = new MatDeterminDialog(parent);
 	mdd.getList().setModel(rlm);
       } catch (Exception e) {e.printStackTrace();}
     }
@@ -104,7 +104,7 @@ public class MatDeterminer implements IQueryClient, IConsts {
   /**
    * 資材名による検索を実行する
    * @param client formula.MatDeterminListener
-   * @param code int
+   * @param name String
    */
   public void searchByName(MatDeterminListener client, String name) {
     mdl = client;

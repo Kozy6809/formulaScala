@@ -2,14 +2,15 @@ package formula
 
 import collection.JavaConversions._
 import javax.swing.AbstractListModel
-import formula.ui.MainView
+import formula.ui.{MainV, MainView}
+
 import java.awt.Color
 import java.text.NumberFormat
 import java.awt.datatransfer.StringSelection
 
 class MainC extends MatDetermin {
   protected val em = Env.fem
-  private val mv = new MainView(this)
+  private val mv = new MainV(this)
   protected val f = mv
   private var resultData: List[_] = _ // 製品で検索した場合はList[Pcode]、資材の場合はList[Array[AnyRef]]
   mv.setSeriesModel(new SeriesListModel)
@@ -22,13 +23,13 @@ class MainC extends MatDetermin {
     val O2 = Value("廃番 ")
   }
   private val obsColor = Array(Color.black, Color.magenta, Color.red)
-  private class SeriesListModel extends AbstractListModel[String] {
+  class SeriesListModel extends AbstractListModel[String] {
     private val data =
       em.createQuery("select distinct p.series from Pcode p order by p.series", classOf[String]).getResultList.toList
     override def getElementAt(ix: Int) = data(ix)
     override def getSize = data.size
   }
-  private class ResultListModel(private var data: List[String]) extends AbstractListModel[String] {
+  class ResultListModel(private var data: List[String]) extends AbstractListModel[String] {
     override def getElementAt(ix: Int) = if (data.size == 0) "該当なし" else data(ix)
     override def getSize = if (data.size == 0) 1 else data.size
   }

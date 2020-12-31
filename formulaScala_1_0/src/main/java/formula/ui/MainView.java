@@ -21,14 +21,14 @@ public class MainView extends JFrame {
 	private int searchMode = 0;
 	private JLabel selectedNames = new JLabel("全品種");
 	private boolean allSeriesSelected = true;
-	private MainC mc;
+	private MainViewC mc;
 
 	private Preferences prefs;
 
 	/**
 	 * MainView コンストラクター・コメント。
 	 */
-	public MainView(MainC mc) {
+	public MainView(MainViewC mc) {
 		super();
 		this.mc = mc;
 		prefs = Preferences.userNodeForPackage(MainView.class);

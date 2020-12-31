@@ -31,7 +31,8 @@ trait MatDetermin {
       case 1 => Some(r(0))
       case _ => {
         val s = r.map(_.mname).toArray
-        val md = new MatDeterminDialog(f, s)
+        val md = new MatDeterminDialog(f)
+        // TODO mdにデータモデルをセットする必要あり md.getList.setModel(...)
         md.pack()
         md.setVisible(true)
         val ix = md.selection

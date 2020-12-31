@@ -6,15 +6,16 @@ import java.awt.event.*;
 
 public class MatDeterminDialog extends JDialog {
 	private JList<String> candidates;
+	private boolean canceled = false;
 	
-	public MatDeterminDialog(java.awt.Frame f, String[] data) {
+	public MatDeterminDialog(java.awt.Frame f) {
 		super(f, true);
 		setTitle("複数の候補があります");
 		Container cp = getContentPane();
 		JLabel l = new JLabel("次のリストから選んで下さい", SwingConstants.CENTER);
 		l.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		cp.add(l, BorderLayout.NORTH);
-		candidates = new JList<String>(data);
+		candidates = new JList<String>();
 		candidates.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane sp = new JScrollPane(candidates);
 		cp.add(sp, BorderLayout.CENTER);
@@ -24,7 +25,8 @@ public class MatDeterminDialog extends JDialog {
 		b.setMnemonic('G');
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					setVisible(false);
+				canceled = false;
+				setVisible(false);
 			}
 		});
 		p.add(b);
@@ -32,6 +34,7 @@ public class MatDeterminDialog extends JDialog {
 		b.setMnemonic('C');
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				canceled = true;
 				candidates.clearSelection();
 				setVisible(false);
 			}
@@ -40,5 +43,13 @@ public class MatDeterminDialog extends JDialog {
 	}
 	public int selection() {
 		return candidates.getSelectedIndex();
+	}
+
+	public JList<String> getList() {
+		return candidates;
+	}
+
+	public boolean isCanceled() {
+		return canceled;
 	}
 }

@@ -25,9 +25,10 @@ public class FBrowseView extends JFrame {
   private int rowOnPopup = 0; // テーブルでポップアップメニューが表示された時の行位置
   /**
    * FBrowseView コンストラクター・コメント。
-   * @param arg1 java.lang.String
+   * @param fbvc controller
+   * @param title String
    */
-  public FBrowseView(FBrowseC fbvc, String title) {
+  public FBrowseView(FBrowseViewC fbvc, String title) {
     super(title);
     this.fbvc = fbvc;
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -309,7 +310,7 @@ public class FBrowseView extends JFrame {
   private void initTable() {
     IFormulaModel fm = fbvc.getFM();
     TableColumnModel tcm = new DefaultTableColumnModel();
-    FormulaCellRenderer fcr = new FormulaCellRenderer(fm, this, SwingConstants.CENTER);
+    FormulaCellRenderer fcr = new FormulaCellRenderer(fbvc, this, SwingConstants.CENTER);
     final NumberField nf = new NumberField();
     EmptyTextCellEditor etce = new EmptyTextCellEditor(nf) {
       public Object getCellEditorValue() {
@@ -319,12 +320,12 @@ public class FBrowseView extends JFrame {
     TableColumn tc = new TableColumn(0, 64, fcr, etce);
     tc.setHeaderValue("コード");
     tcm.addColumn(tc);
-    fcr = new FormulaCellRenderer(fm, this, SwingConstants.LEFT);
+    fcr = new FormulaCellRenderer(fbvc, this, SwingConstants.LEFT);
     etce = new EmptyTextCellEditor(new JTextField());
     tc = new TableColumn(1, 128, fcr, etce);
     tc.setHeaderValue("資材記号");
     tcm.addColumn(tc);
-    fcr = new FormulaCellRenderer(fm, this, SwingConstants.RIGHT);
+    fcr = new FormulaCellRenderer(fbvc, this, SwingConstants.RIGHT);
     fcr.setFractionDigits(3);
     final NumberField nf2 = new NumberField();
     nf2.setAllowDouble(true);

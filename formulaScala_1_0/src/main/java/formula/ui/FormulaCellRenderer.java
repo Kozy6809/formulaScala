@@ -11,14 +11,14 @@ import javax.swing.table.*;
  * setValue()メソッドを適切にオーバーライドする
  */
 public class FormulaCellRenderer extends DefaultTableCellRenderer {
-	private FBrowseC fbc;
+	private FBrowseViewC fbc;
 	private FBrowseView fbv;
 	private NumberFormat nf = NumberFormat.getInstance();
 
 	/**
 	 * FormulaCellRenderer コンストラクター・コメント。
 	 */
-	public FormulaCellRenderer(FBrowseC fbc, FBrowseView fbv,
+	public FormulaCellRenderer(FBrowseViewC fbc, FBrowseView fbv,
 			int horizontalAlignment) {
 		super();
 		this.fbc = fbc;
@@ -47,7 +47,9 @@ public class FormulaCellRenderer extends DefaultTableCellRenderer {
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		Component c = super.getTableCellRendererComponent(table, value, isSelected,
 				hasFocus, row, column);
-		int status = fbc.matStatus(row);
+		// TODO 正しいステータスを返すようにする
+		// int status = fbc.matStatus(row);
+		int status = 0;
 		switch (status) {
 		case 0:
 			c.setForeground(Color.black);
@@ -64,8 +66,7 @@ public class FormulaCellRenderer extends DefaultTableCellRenderer {
 	}
 
 	/**
-	 * @param d
-	 *          int
+	 * @param fd int
 	 */
 	public void setFractionDigits(int fd) {
 		nf.setMinimumFractionDigits(fd);

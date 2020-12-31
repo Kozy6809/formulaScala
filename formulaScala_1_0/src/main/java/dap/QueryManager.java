@@ -21,8 +21,8 @@ import myutil.*;
 public class QueryManager implements Runnable, IConsts {
   private IDapClient dc = null;
   private IGlobalErrorHandler geh = null;
-  // コマンドキュー。現在はVectorで実装されている
-  private Vector commands = new Vector();
+  // コマンドキュー
+  private List<Command> commands = new ArrayList<>();
 
   // ステートメントIDからSQL文を逆引きするためのハッシュ。デバッグ用
   private Hashtable id2sql = new Hashtable();
@@ -52,8 +52,6 @@ public class QueryManager implements Runnable, IConsts {
   /**
    * トランザクション開始時に呼び出されるメソッド。コミットモードを非自動にし、
    * トランザクションを開始させる
-   * @param client dap.IQueryClient
-   * @param mode int
    */
   private boolean beginTransaction() {
     if (transactionErrored) return false;
@@ -70,7 +68,7 @@ public class QueryManager implements Runnable, IConsts {
    * コミットリクエストをキューに入れる。
    * このリクエストはトランザクションに係わる。
    * @param client dap.IQueryClient
-   * @param callBackMode int
+   * @param mode int コールバックモード
    * @param transactionID int
    */
   public synchronized void
@@ -105,7 +103,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -131,7 +129,6 @@ public class QueryManager implements Runnable, IConsts {
   /**
    * グローバルエラーを通知する。具体的にはサーバーとの接続でIOExceptionが発生した場合、
    * 続行は不可能なのでそれに対処する
-   * @param o java.lang.Object
    * @param t java.lang.Throwable
    */
   private void fireGlobalError(Throwable t) {
@@ -190,7 +187,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -245,7 +242,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -275,7 +272,7 @@ public class QueryManager implements Runnable, IConsts {
    * prepared updateをリクエストする。
    * このexec()メソッドはトランザクションに係わる。
    * @param client dap.IQueryClient
-   * @param callBackMode int
+   * @param mode int コールバックモード
    * @param stmtID int
    * @param params java.lang.Object[]
    * @param transactionID int
@@ -305,7 +302,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -360,7 +357,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -410,7 +407,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -471,7 +468,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**
@@ -506,11 +503,11 @@ public class QueryManager implements Runnable, IConsts {
       int i, n;
       synchronized(commands) {
 	for (i=0, n=commands.size(); i < n; i++) {
-	  cmd = (Command)commands.elementAt(i);
+	  cmd = commands.get(i);
 	  if (onTransaction &&
 	      !cmd.isTransactable(currentTransactionID)) continue;
 	  else {
-	    commands.removeElementAt(i);
+	    commands.remove(i);
 	    break;
 	  }
 	}
@@ -568,7 +565,7 @@ public class QueryManager implements Runnable, IConsts {
    * updateをリクエストする。
    * このexec()メソッドはトランザクションに係わる。
    * @param client dap.IQueryClient
-   * @param callBackMode int
+   * @param mode int コールバックモード
    * @param sql java.lang.String
    * @param transactionID int
    */
@@ -597,7 +594,7 @@ public class QueryManager implements Runnable, IConsts {
       }
     };
 
-    commands.addElement(cmd);
+    commands.add(cmd);
     notifyAll();
   }
   /**

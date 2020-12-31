@@ -13,6 +13,8 @@ import java.io.*;
 import java.net.*;
 import java.sql.*;
 import java.math.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 class Dap implements Runnable, dap.IConsts {
@@ -21,7 +23,7 @@ class Dap implements Runnable, dap.IConsts {
   private ObjectOutputStream dos = null;
   private Connection con = null;
   private Statement stmt = null;
-  private Vector ppStmts = null; // prepared statements
+  private List<PpStmt> ppStmts = new ArrayList<>();
   private ResultSet rs = null;
   private ResultSetMetaData rsmd = null;
   private int[] colTypes = null; //column types of result set
@@ -31,7 +33,6 @@ class Dap implements Runnable, dap.IConsts {
     this.s = s;
     dis = new ObjectInputStream(s.getInputStream());
     dos = new ObjectOutputStream(s.getOutputStream());
-    ppStmts = new Vector();
   }
   void dapAutoCommit() throws IOException {
     try {
@@ -89,10 +90,10 @@ class Dap implements Runnable, dap.IConsts {
 	stmt.close();
 	success = true;
       } else if (ID < ppStmts.size()) {
-	PpStmt p = (PpStmt)ppStmts.elementAt(ID);
+	PpStmt p = ppStmts.get(ID);
 	if (p != null) {
 	  p.getStmt().close();
-	  ppStmts.setElementAt(null, ID);
+	  ppStmts.set(ID, null);
 	  success = true;
 	}
       }
@@ -232,7 +233,7 @@ class Dap implements Runnable, dap.IConsts {
     try {
       int index = dis.readInt();
       Object[] parms = (Object[])dis.readObject();
-      PpStmt p = (PpStmt)ppStmts.elementAt(index);
+      PpStmt p = ppStmts.get(index);
       if (p == null) {
 	invalidID();
 	return;
@@ -262,7 +263,7 @@ class Dap implements Runnable, dap.IConsts {
       }
       PpStmt p = new PpStmt();
       p.setTypes(types);
-      ppStmts.addElement(p);
+      ppStmts.add(p);
       p.setStmt(con.prepareStatement(stmt));
       dos.writeInt(OK);
       dos.writeInt(ppStmts.size()-1);
@@ -275,7 +276,7 @@ class Dap implements Runnable, dap.IConsts {
     try {
       int index = dis.readInt();
       Object[] parms = (Object[])dis.readObject();
-      PpStmt p = (PpStmt)ppStmts.elementAt(index);
+      PpStmt p = (PpStmt)ppStmts.get(index);
       if (p == null) {
 	invalidID();
 	return;

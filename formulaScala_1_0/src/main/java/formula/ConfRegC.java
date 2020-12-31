@@ -8,7 +8,8 @@ import javax.swing.table.*;
 import dap.*;
 import formula.ui.*;
 /**
- * 業務部での処方登録確認のコントローラ
+ * 業務部での処方登録確認のコントローラ。これは管理部で手動で処方登録する古いバージョンであり、
+ * 管理dbに直接処方登録するバージョンでは使用されない。代替クラスはConfReg
  */
 public class ConfRegC implements IConsts, IQueryClient {
   private MainViewC mvc;
@@ -133,7 +134,8 @@ public class ConfRegC implements IConsts, IQueryClient {
       if (cr.getSize() == 0) return;
     }
     if (crv == null) {
-      crv = new ConfRegV(this, crtm);
+      // コンパイルを通すためのコメントアウト
+      // crv = new ConfRegV(this, crtm);
       crv.pack();
     }
     SwingUtilities.invokeLater(new Runnable() {

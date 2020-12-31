@@ -6,4 +6,4 @@ fork in run := true
 
 mainClass in (Compile, run) := Some("formula.Main")
 
-libraryDependencies += "org.scala-lang" % "scala-swing" % "2.9.1"
+libraryDependencies += "org.scala-lang" % "scala-swing" % "2.10.7"

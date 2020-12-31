@@ -1,5 +1,6 @@
 package dap;
 
+import java.sql.Connection;
 import java.util.*;
 import dap.*;
 /**
@@ -12,7 +13,7 @@ import dap.*;
  * 
  */
 public class Connections implements IConsts {
-  private Hashtable cons = new Hashtable();
+  private HashMap<String, Object[]> cons = new HashMap<>();
   /**
    * QMFactory コンストラクター・コメント。
    */
