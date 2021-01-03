@@ -15,8 +15,6 @@ import javax.persistence._
  * 元表にはプライマリキーが設定されていない
  */
 final class Cmaster {
-  @Column(name = "製造コード")
-  var pcodeNew:Int =_
   @Id
   @Column(name = "製造コード旧")
   var pcode:Int =_
@@ -33,7 +31,7 @@ final class Cmaster {
   @Column(name = "備考5")
   var comment5:String =_
 
-  override def toString = pcodeNew +" "+ pcode +" "+ comment +" "+ comment1 +" "+ comment2 +" "+ comment3 +" "+ comment4 +" "+ comment5
+  override def toString = pcode +" "+ comment +" "+ comment1 +" "+ comment2 +" "+ comment3 +" "+ comment4 +" "+ comment5
   override def hashCode = pcode
   override def equals(o:Any) = o match {
     case p:Cmaster => p.pcode == pcode
