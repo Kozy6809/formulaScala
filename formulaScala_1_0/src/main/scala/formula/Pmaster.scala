@@ -59,10 +59,18 @@ final class Pmaster {
   var invoiceFlag:Short =_
   @Column(name = "注意フラグ")
   var cautionFlag:Short =_
-  @Column(name = "標準時間")
-  var stdTime:Double =_
-  @Column(name = "標準ロール")
-  var stdRoll:Int =_
+  @Column(name = "生産定量L")
+  var productionVol: Int =_
+  @Column(name = "下限値")
+  var visLowerLimit: Double =_
+  @Column(name = "標準値")
+  var visCenter: Double =_
+  @Column(name = "上限値")
+  var visUpperLimit: Double =_
+  @Column(name = "ビーズ充填率")
+  var beadFillingRate: Int =_
+  @Column(name = "吐出量")
+  var productionRate: Int =_
   @Column(name = "標準回数")
   var stdPathTime:Short =_
   @Column(name = "登録区分")
@@ -77,7 +85,9 @@ final class Pmaster {
   productKindCode+" "+factoryCode+" "+sameMonth+" "+employeeID+" "+
   m1+" "+m2+" "+m3+" "+productionAmount+" "+minimumAmount+" "+
   priority+" "+isMedium+" "+spareStockAmount+" "+invoiceFlag+" "+
-  cautionFlag+" "+publisherID+" "+stdTime+" "+stdRoll+" "+
+  cautionFlag+" "+publisherID+" "+productionVol+
+    " "+visLowerLimit+" "+visCenter+" "+visUpperLimit+" "+
+    beadFillingRate+" "+productionRate+" "+
   stdPathTime+" "+registerSpec+" "+registerDate+" "+alterDate+" "+
   updateDate+" "+printDate+" "+computerName
   override def hashCode = pcode
